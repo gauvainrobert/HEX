@@ -78,6 +78,15 @@ char graphe_detectWinner(graphe g);
  */
 char graphe_getCellContent(graphe g, int x, int y);
 
+/**
+ * Description: retourne les groupes de cellules dont le contenu est p
+ *
+ * Précondition: g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC)
+ */
+
+cell** graphe_getGroups(graphe g, pion p);
+
+
 /* Destructeurs */
 
 /**
