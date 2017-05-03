@@ -1,9 +1,9 @@
-/****************************************************
-* Module Graphe
-* Description:
-*
-* G. ROBERT - Univ. de Toulouse III - Paul Sabatier 
-*****************************************************/
+/******************************************************************
+* Module Graphe                                                   *
+* Description: Module qui permet de représenter un plateau de jeu *
+* de taille variable                                              *
+* G. ROBERT - Univ. de Toulouse III - Paul Sabatier               *
+*******************************************************************/
 
 #ifndef GRAPHE_H_
 #define GRAPHE_H_
@@ -12,7 +12,7 @@
 
 #define BLANC 'b'
 #define NOIR  'n'
-#define VIDE  '.' 
+#define VIDE '.'
 
 typedef char pion;
 typedef struct _cell * cell;
@@ -21,7 +21,7 @@ typedef struct _graphe * graphe;
 /* Constructeurs */
 
 /**
- * Description: crée un graphe à partir d'une taille n 
+ * Description: crée un graphe de à partir d'une taille n 
  * et retourne le graphe initialisé avec des cases vides.
  * Précondition: n>1
  */
@@ -58,8 +58,25 @@ graphe graphe_remove(graphe* g, int x, int y);
  * 
  * Précondition: g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[
  */
-bool graphe_isEmptyHex(graphe g, int x, int y);
+bool graphe_isEmptyCell(graphe g, int x, int y);
 
+/**
+ * Description:
+ * La fonction retourne BLANC si le joueur blanc a gagné.
+ * La fonction retourne NOIR si le joueur noir a gagné.
+ * La fonction retourne VIDE sinon
+ *
+ * Précondition: g ≠ NULL
+ */
+char graphe_detectWinner(graphe g);
+
+/**
+ * Description: retourne le contenu d'une cellule de cordonnées (x,y)
+ * dans un graphe g
+ * 
+ * Précondition: g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[
+ */
+char graphe_getCellContent(graphe g, int x, int y);
 
 /* Destructeurs */
 
