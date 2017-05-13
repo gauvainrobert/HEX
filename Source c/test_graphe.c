@@ -37,6 +37,7 @@ int main(void){
 
 
 	graphe_destroy(&g);
+	graphe_destroy(&f);
 	printf("Tests %d/%d passed\n", passed, total);
   return total - passed;
 }

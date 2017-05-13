@@ -177,6 +177,19 @@ static void _freeCell(Cell* c){
 
 void graphe_destroy(Graphe* g){
 	Cell itr,mem1,mem2;
+	Cell** groupsW=(*g)->groupsW;
+	Cell** groupsB=(*g)->groupsB;
+	size_t i;
+
+	for(i=0;i<(*g)->size_groupsB;i++)
+		free(groupsB[i]);
+	free(groupsB);
+
+	for(i=0;i<(*g)->size_groupsW;i++)
+		free(groupsW[i]);
+	free(groupsW);
+
+
 	itr=(*g)->head;
 	mem1=itr->cells[3];
 	
@@ -250,7 +263,7 @@ static bool _asCellInCommon(Cell* group, Cell c){
 static void _insertIntoGroups(Graphe g, Cell c){
 	assert(g!=NULL && c!=NULL && (c->key==BLANC||c->key==NOIR));
 	Cell*** groups;
-	Cell* temp=NULL;
+	Cell* temp;
 	size_t size_temp=1;
 	size_t* size_groups;
 	size_t j;
@@ -282,6 +295,7 @@ static void _insertIntoGroups(Graphe g, Cell c){
 				temp[size_temp-1]=(*groups)[i][j];
 				temp[size_temp]=NULL;
 			}
+			free((*groups)[i]);
 			for(j=i;j<(*size_groups)-1;j++)
 				(*groups)[j]=(*groups)[j+1];
 			*groups=(Cell**)realloc(*groups,--(*size_groups)*sizeof(Cell*));
