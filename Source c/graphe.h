@@ -14,9 +14,9 @@
 #define NOIR  'n'
 #define VIDE '.'
 
-typedef char pion;
-typedef struct _cell * cell;
-typedef struct _graphe * graphe;
+typedef char Pion;
+typedef struct _cell * Cell;
+typedef struct _graphe * Graphe;
 
 /* Constructeurs */
 
@@ -25,7 +25,7 @@ typedef struct _graphe * graphe;
  * et retourne le graphe initialisé avec des cases vides.
  * Précondition: n>1
  */
-graphe graphe_create(int n);
+Graphe graphe_create(int n);
 
 /**
  * Description: Insère un pion p dans un graphe g aux cordonnées (x,y)
@@ -34,8 +34,9 @@ graphe graphe_create(int n);
  * Précondition: 
  * Soit n, la taille de la grille g, on a:
  *   g ≠ NULL ⋀ *g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC) ⋀ x∈[0,n[ ⋀ y∈[0,n[ ⋀ graphe_isEmptyHex(*g,x,y)
+ * ⋀ graphe_getCellContent(*g,x,y)=VIDE
  */
-graphe graphe_insert(graphe* g, pion p, int x, int y);
+Graphe graphe_insert(Graphe* g, Pion p, int x, int y);
 
 /**
  * Descrition: Supprime le pion dans le graphe g placé aux cordonnées (x,y)
@@ -43,10 +44,11 @@ graphe graphe_insert(graphe* g, pion p, int x, int y);
  *	
  * Précondition: 
  * Soit n, la taille de la grille g, on a:
- *   g ≠ NULL ⋀ *g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[
+ *   g ≠ NULL ⋀ *g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[ 
+ * ⋀ (graphe_getCellContent(*g,x,y)=NOIR ⋁ graphe_getCellContent(*g,x,y)=BLANC)
  *
  */
-graphe graphe_remove(graphe* g, int x, int y);
+Graphe graphe_remove(Graphe* g, int x, int y);
 
 
 /* Projecteurs */
@@ -56,9 +58,11 @@ graphe graphe_remove(graphe* g, int x, int y);
  * est vide,
  * renvoie faux sinon.
  * 
- * Précondition: g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[
+ * Précondition: 
+ * Soit n, la taille de la grille g, on a:
+ * g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[
  */
-bool graphe_isEmptyCell(graphe g, int x, int y);
+bool graphe_isEmptyCell(Graphe g, int x, int y);
 
 /**
  * Description:
@@ -68,7 +72,7 @@ bool graphe_isEmptyCell(graphe g, int x, int y);
  *
  * Précondition: g ≠ NULL
  */
-char graphe_detectWinner(graphe g);
+char graphe_detectWinner(Graphe g);
 
 /**
  * Description: retourne le contenu d'une cellule de cordonnées (x,y)
@@ -76,7 +80,7 @@ char graphe_detectWinner(graphe g);
  * 
  * Précondition: g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[
  */
-char graphe_getCellContent(graphe g, int x, int y);
+char graphe_getCellContent(Graphe g, int x, int y);
 
 /**
  * Description: retourne les groupes de cellules dont le contenu est p
@@ -84,8 +88,23 @@ char graphe_getCellContent(graphe g, int x, int y);
  * Précondition: g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC)
  */
 
-cell** graphe_getGroups(graphe g, pion p);
+Cell** graphe_getGroups(Graphe g, Pion p);
 
+/**
+ * Description: retourne le nombre des groupes de cellules dont le contenu est p
+ *
+ * Précondition: g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC)
+ */
+
+size_t graphe_getGroupsSize(Graphe g, Pion p);
+
+
+/**
+ * Description: imprime le graphe sur la sortie standard au format ascii
+ *
+ * Précondition: g ≠ NULL
+ */
+void graphe_print(Graphe g);
 
 /* Destructeurs */
 
@@ -94,7 +113,7 @@ cell** graphe_getGroups(graphe g, pion p);
  *
  * Précondition: g ≠ NULL ⋀ *g ≠ NULL
  */
-int graphe_destroy(graphe* g);
+void graphe_destroy(Graphe* g);
 
 
 #endif

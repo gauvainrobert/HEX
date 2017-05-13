@@ -11,7 +11,7 @@ test_graphe.o: test_graphe.c
 
 
 
-test_graphee: graphe.o test_graphe.o
+test_graphe: graphe.o test_graphe.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean maxclean
