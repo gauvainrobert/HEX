@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "graphe.h"
 
 
@@ -11,12 +13,22 @@ void test(const char * msg, bool result) {
   total += 1;
 }
 
-
+/* 
+ * Description: Retourne un entier compris entre 0 et x non inclus
+ *
+ * Précondition: x>0
+ */
+int random(int x){
+	assert(x>0);
+  return rand()%x;
+}
 
 int main(void){
-	int n=13;
+	int n=20;
+	int x,y;
 	Graphe g;
 	Graphe f;
+	char content;
 	g=graphe_create(n);
 	f=graphe_create(2);
 
@@ -31,9 +43,27 @@ int main(void){
 	graphe_remove(&g,1,2);
 
 	graphe_insert(&f,BLANC,0,0);
-	graphe_insert(&f,BLANC,0,1);
-
+	graphe_insert(&f,BLANC,1,0);
 	test("Detect winner",graphe_detectWinner(f)==BLANC);
+	graphe_remove(&f,0,0);
+	graphe_insert(&f,NOIR,0,0);
+	graphe_insert(&f,NOIR,0,1);
+	test("Detect winner",graphe_detectWinner(f)==NOIR);
+	
+
+
+	for(int i=0; i<1000; i++){
+		x=random(n);
+		y=random(n);
+		if(graphe_isEmptyCell(g,x,y)){
+			graphe_insert(&g,NOIR,x,y);
+			test("Test insert",!graphe_isEmptyCell(g,x,y));
+		}else{
+			graphe_remove(&g,x,y);
+			test("Test remove",graphe_isEmptyCell(g,x,y));
+		}
+	}
+
 
 
 	graphe_destroy(&g);

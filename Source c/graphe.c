@@ -430,16 +430,16 @@ static bool _detectWinner(Graphe g, Pion p){
 		b1=false;
 		b2=false;
 		for(size_t j=0;groups[i][j]!=NULL&&(!w1||!w2)&&(!b1||!b2);j++){
-			if(p==NOIR){
+			if(p==BLANC){
 				if(groups[i][j]->cells[0]->key=='W')
-					b1=true;
+					w1=true;
 				else if(groups[i][j]->cells[3]->key=='W')
-					b2=true;
+					w2=true;
 			}else{
 				if(groups[i][j]->cells[2]->key=='B')
-					w1=true;
+					b1=true;
 				else if(groups[i][j]->cells[4]->key=='B')
-					w2=true;
+					b2=true;
 			}
 		}
 	}
