@@ -293,12 +293,13 @@ static void _insertIntoGroups(Graphe g, Cell c){
 			i++;
 		}
 	}
-	*groups=(Cell**)realloc(*groups,(++(*size_groups))*sizeof(Cell*));
+	*groups=(Cell**)realloc(*groups,(++(*size_groups)+1)*sizeof(Cell*));
 	if(*groups==NULL){
 		fprintf(stderr, "Allocation mémoire impossible\n");
 		return;
 	}
 	(*groups)[(*size_groups)-1]=temp;
+	(*groups)[(*size_groups)]=NULL;
 }
 
 Graphe graphe_insert(Graphe* g, Pion p, int x, int y){
