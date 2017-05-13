@@ -96,7 +96,7 @@ Cell** graphe_getGroups(Graphe g, Pion p);
  * Précondition: g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC)
  */
 
-size_t graphe_getGroupsSize(Graphe g, Pion p);
+size_t graphe_countGroups(Graphe g, Pion p);
 
 
 /**

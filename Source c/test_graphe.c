@@ -26,11 +26,10 @@ int random(int x){
 int main(void){
 	int n=20;
 	int x,y;
-	Graphe g;
-	Graphe f;
-	char content;
+	Graphe g,f,h;
 	g=graphe_create(n);
 	f=graphe_create(2);
+	h=graphe_create(3);
 
 	for(int x=0;x<n;x++)
 		for(int y=0;y<n;y++)
@@ -49,8 +48,27 @@ int main(void){
 	graphe_insert(&f,NOIR,0,0);
 	graphe_insert(&f,NOIR,0,1);
 	test("Detect winner",graphe_detectWinner(f)==NOIR);
-	
+	graphe_remove(&f,1,0);
+	graphe_remove(&f,0,1);
+	graphe_insert(&f,NOIR,1,1);
+	test("Test number of groups",graphe_countGroups(f,NOIR)==2);
+	graphe_insert(&f,NOIR,1,0);
+	test("Test number of groups",graphe_countGroups(f,NOIR)==1);
 
+	graphe_insert(&h,NOIR,0,0);
+	graphe_insert(&h,NOIR,0,1);
+	graphe_insert(&h,NOIR,1,2);
+	graphe_insert(&h,NOIR,2,0);
+	graphe_insert(&h,NOIR,2,2);
+	test("Test number of groups",graphe_countGroups(h,NOIR)==3);
+	graphe_insert(&h,NOIR,1,1);
+	test("Test number of groups",graphe_countGroups(h,NOIR)==1);
+	graphe_remove(&h,1,1);
+	graphe_insert(&h,NOIR,1,0);
+	test("Test number of groups",graphe_countGroups(h,NOIR)==2);
+	graphe_insert(&h,NOIR,1,1);
+	test("Test number of groups",graphe_countGroups(h,NOIR)==1);
+	test("Detect winner",graphe_detectWinner(f)==NOIR);
 
 	for(int i=0; i<1000; i++){
 		x=random(n);

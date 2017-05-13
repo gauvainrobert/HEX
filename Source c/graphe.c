@@ -400,7 +400,7 @@ Cell** graphe_getGroups(Graphe g, Pion p){
 	return p==NOIR?g->groupsB:g->groupsW;
 }
 
-size_t graphe_getGroupsSize(Graphe g, Pion p){
+size_t graphe_countGroups(Graphe g, Pion p){
 	assert(g!=NULL && (p==BLANC||p==NOIR));
 	return p==NOIR?g->size_groupsB:g->size_groupsW;
 }
