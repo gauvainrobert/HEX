@@ -285,10 +285,6 @@ static void _insertIntoGroups(Graphe g, Cell c){
 			for(j=i;j<(*size_groups)-1;j++)
 				(*groups)[j]=(*groups)[j+1];
 			*groups=(Cell**)realloc(*groups,--(*size_groups)*sizeof(Cell*));
-			if(*groups==NULL){
-				fprintf(stderr, "Allocation mémoire impossible\n");
-				return;
-			}
 		}else{
 			i++;
 		}
@@ -393,4 +389,55 @@ Cell** graphe_getGroups(Graphe g, Pion p){
 size_t graphe_getGroupsSize(Graphe g, Pion p){
 	assert(g!=NULL && (p==BLANC||p==NOIR));
 	return p==NOIR?g->size_groupsB:g->size_groupsW;
+}
+
+/* 
+ * Description: renvoie vrai si le pion passé en paramètre est la couleur gagnante.
+ *
+ * Précondition: g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC)
+ */
+
+static bool _detectWinner(Graphe g, Pion p){
+	assert(g!=NULL && (p==NOIR || p==BLANC));
+
+	Cell** groups=graphe_getGroups(g,p);
+	bool w1,w2,b1,b2; // permettent de savoir si les arrêtes d'une cellule sont en contact avec un bord du plateau
+	w1=false;
+	w2=false;
+	b1=false;
+	b2=false;
+
+	if(groups==NULL)
+		return false;
+
+	for(size_t i=0;groups[i]!=NULL&&(!w1||!w2)&&(!b1||!b2);i++){
+		w1=false;
+		w2=false;
+		b1=false;
+		b2=false;
+		for(size_t j=0;groups[i][j]!=NULL&&(!w1||!w2)&&(!b1||!b2);j++){
+			if(p==NOIR){
+				if(groups[i][j]->cells[0]->key=='W')
+					b1=true;
+				else if(groups[i][j]->cells[3]->key=='W')
+					b2=true;
+			}else{
+				if(groups[i][j]->cells[2]->key=='B')
+					w1=true;
+				else if(groups[i][j]->cells[4]->key=='B')
+					w2=true;
+			}
+		}
+	}
+	return (w1&&w2)||(b1&&b2);
+
+}
+
+char graphe_detectWinner(Graphe g){
+	assert(g!=NULL);
+	if(_detectWinner(g,NOIR))
+		return NOIR;
+	else if(_detectWinner(g,BLANC))
+		return BLANC;
+	return VIDE;
 }
