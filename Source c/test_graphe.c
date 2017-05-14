@@ -26,7 +26,8 @@ int random(int x){
 int main(void){
 	int n=20;
 	int x,y;
-	Graphe g,f,h;
+	char* c;
+	Graphe g,f,h,i;
 	g=graphe_create(n);
 	f=graphe_create(2);
 	h=graphe_create(3);
@@ -81,11 +82,20 @@ int main(void){
 			test("Test remove",graphe_isEmptyCell(g,x,y));
 		}
 	}
-
-
-
+	printf("Test conversion Graphe vers String:\n");
+	c=graphe_toString(g);
+	printf("%s",c);
+	printf("Test conversion String vers Graphe:\n");
+	i=graphe_toGraphe(c);
+	free(c);
+	c=graphe_toString(i);
+	printf("Test conversion Graphe vers String:\n");
+	printf("%s",c);
+	free(c);
 	graphe_destroy(&g);
 	graphe_destroy(&f);
+	graphe_destroy(&h);
+	graphe_destroy(&i);
 	printf("Tests %d/%d passed\n", passed, total);
   return total - passed;
 }

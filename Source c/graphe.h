@@ -98,6 +98,13 @@ Cell** graphe_getGroups(Graphe g, Pion p);
 
 size_t graphe_countGroups(Graphe g, Pion p);
 
+/*
+ * Description: retourne la taille d'un graphe passé en paramètre
+ *
+ * Précondition: g ≠ NULL
+ */
+int graphe_getSize(Graphe g);
+
 
 /**
  * Description: imprime le graphe sur la sortie standard au format ascii
@@ -105,6 +112,20 @@ size_t graphe_countGroups(Graphe g, Pion p);
  * Précondition: g ≠ NULL
  */
 void graphe_print(Graphe g);
+
+/**
+ * Description: retourne une chaine de caractères representant le graphe au format ascii
+ *
+ * Précondition: g ≠ NULL
+ */
+char* graphe_toString(Graphe g);
+
+/**
+ * Description: transforme une chaine de caractères representant le graphe au format ascii en type Graphe
+ *
+ * Précondition: c ≠ NULL ⋀ *c ≠ NULL
+ */
+Graphe graphe_toGraphe(char* c);
 
 /* Destructeurs */
 

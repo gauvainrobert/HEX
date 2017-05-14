@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include "graphe.h"
 
 
@@ -122,8 +124,36 @@ Graphe graphe_create(int n){
 	return g;
 }
 
+char* graphe_toString(Graphe g){
+	Cell itr,mem;
+	int n=g->size;
+	int j=1;
+	int i=0;
+	char* c=malloc(2*(n*n)+1);
 
+	itr=g->head;
+	mem=itr;
+	for(;itr->key!='W';){
 
+		if(itr->key==VIDE)
+			c[i]=itr->key;
+		else
+			c[i]=itr->key==BLANC?'o':'*';
+
+		if(itr->cells[2]->key=='B'){
+			c[i+1]='\n';
+			j++;
+			itr=mem->cells[3];
+			mem=itr;
+		}else{
+			c[i+1]=' ';
+			itr=itr->cells[2];
+		}
+		i=i+2;
+	}
+	c[i]='\0';
+	return c;
+}
 
 void graphe_print(Graphe g){
 	Cell itr,mem;
@@ -160,7 +190,25 @@ void graphe_print(Graphe g){
 	for(int i=0;i<n;i++)
 		printf("W ");
 	printf("\n");
+}
 
+Graphe graphe_toGraphe(char* c){
+	Graphe g;
+	size_t c_len;
+	int n=(int)sqrt((double)(c_len=strlen(c))/2);
+	int temp;
+	char car;
+	Pion p;
+	g=graphe_create(n);
+	for(size_t i=0;i<c_len;i=i+2){
+		temp=i/2;
+		car=c[i];
+		if(car=='o'||car=='*'){
+			p=car=='o'?BLANC:NOIR;
+			graphe_insert(&g,p,temp/n,temp%n);
+		}
+	}
+	return g;
 }
 
 /**
@@ -454,4 +502,8 @@ char graphe_detectWinner(Graphe g){
 	else if(_detectWinner(g,BLANC))
 		return BLANC;
 	return VIDE;
+}
+
+int graphe_getSize(Graphe g){
+	return g->size;
 }
