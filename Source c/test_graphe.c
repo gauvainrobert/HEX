@@ -27,7 +27,7 @@ int main(void){
 	int n=20;
 	int x,y;
 	char* c;
-	Graphe g,f,h,i;
+	Graphe g,f,h,i,k;
 	g=graphe_create(n);
 	f=graphe_create(2);
 	h=graphe_create(3);
@@ -84,14 +84,20 @@ int main(void){
 	}
 	printf("Test conversion Graphe vers String:\n");
 	c=graphe_toString(g);
-	printf("%s",c);
+	printf("%s\n",c);
 	printf("Test conversion String vers Graphe:\n");
 	i=graphe_toGraphe(c);
 	free(c);
 	c=graphe_toString(i);
 	printf("Test conversion Graphe vers String:\n");
-	printf("%s",c);
+	printf("%s\n",c);
 	free(c);
+
+	for(int i=2; i<50; i++){
+		k=graphe_create(i);
+		test("Test detect winner in Empty Graphe",graphe_detectWinner(k)==VIDE);
+		graphe_destroy(&k);
+	}
 	graphe_destroy(&g);
 	graphe_destroy(&f);
 	graphe_destroy(&h);

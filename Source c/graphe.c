@@ -127,13 +127,12 @@ Graphe graphe_create(int n){
 char* graphe_toString(Graphe g){
 	Cell itr,mem;
 	int n=g->size;
-	int j=1;
 	int i=0;
-	char* c=malloc(2*(n*n)+1);
+	char* c=malloc((n*n)+1);
 
 	itr=g->head;
 	mem=itr;
-	for(;itr->key!='W';){
+	for(;itr->key!='W';i++){
 
 		if(itr->key==VIDE)
 			c[i]=itr->key;
@@ -141,15 +140,11 @@ char* graphe_toString(Graphe g){
 			c[i]=itr->key==BLANC?'o':'*';
 
 		if(itr->cells[2]->key=='B'){
-			c[i+1]='\n';
-			j++;
 			itr=mem->cells[3];
 			mem=itr;
 		}else{
-			c[i+1]=' ';
 			itr=itr->cells[2];
 		}
-		i=i+2;
 	}
 	c[i]='\0';
 	return c;
@@ -195,17 +190,15 @@ void graphe_print(Graphe g){
 Graphe graphe_toGraphe(char* c){
 	Graphe g;
 	size_t c_len;
-	int n=(int)sqrt((double)(c_len=strlen(c))/2);
-	int temp;
+	int n=(int)sqrt((double)(c_len=strlen(c)));
 	char car;
 	Pion p;
 	g=graphe_create(n);
-	for(size_t i=0;i<c_len;i=i+2){
-		temp=i/2;
+	for(size_t i=0;i<c_len;i++){
 		car=c[i];
 		if(car=='o'||car=='*'){
 			p=car=='o'?BLANC:NOIR;
-			graphe_insert(&g,p,temp/n,temp%n);
+			graphe_insert(&g,p,i/n,i%n);
 		}
 	}
 	return g;
@@ -300,7 +293,7 @@ static bool _asCellInCommon(Cell* group, Cell c){
 	return false;
 }
 
-/*
+/**
  * Description: permet de placer une cellule c dans le bon groupe de cellules du graphe
  * et permet de fusionner des groupes de cellules si c possède des arrêtes communes entre des cellules
  * de ces deux groupes.
@@ -352,7 +345,7 @@ static void _insertIntoGroups(Graphe g, Cell c){
 		}
 	}
 	*groups=(Cell**)realloc(*groups,(++(*size_groups)+1)*sizeof(Cell*));
-	if(*groups==NULL){
+	if((*groups)==NULL){
 		fprintf(stderr, "Allocation mémoire impossible\n");
 		return;
 	}
@@ -371,7 +364,7 @@ Graphe graphe_insert(Graphe* g, Pion p, int x, int y){
 	return (*g);
 }
 
-/*
+/**
  * Description: renvoie vrai si c appartient à group, faux sinon
  *
  * Précondition: group!=NULL ⋀ *group!=NULL ⋀ c!=NULL
@@ -385,7 +378,7 @@ static bool _cellInGroup(Cell* group, Cell c){
 	return false;
 }
 
-/*
+/**
  * Description: permet de retirer une cellule c du bon groupe de cellules du graphe auquel elle appartenait
  * et permet de séparer des groupes de cellules si c possèdait des arrêtes communes entre des cellules
  * de ce groupe.
@@ -453,7 +446,7 @@ size_t graphe_countGroups(Graphe g, Pion p){
 	return p==NOIR?g->size_groupsB:g->size_groupsW;
 }
 
-/* 
+/** 
  * Description: renvoie vrai si le pion passé en paramètre est la couleur gagnante.
  *
  * Précondition: g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC)
@@ -463,16 +456,17 @@ static bool _detectWinner(Graphe g, Pion p){
 	assert(g!=NULL && (p==NOIR || p==BLANC));
 
 	Cell** groups=graphe_getGroups(g,p);
+	size_t size_group=p==NOIR?g->size_groupsB:g->size_groupsW;
 	bool w1,w2,b1,b2; // permettent de savoir si les arrêtes d'une cellule sont en contact avec un bord du plateau
 	w1=false;
 	w2=false;
 	b1=false;
 	b2=false;
 
-	if(groups==NULL)
+	if(size_group==0)
 		return false;
 
-	for(size_t i=0;groups[i]!=NULL&&(!w1||!w2)&&(!b1||!b2);i++){
+	for(size_t i=0;i<size_group&&(!w1||!w2)&&(!b1||!b2);i++){
 		w1=false;
 		w2=false;
 		b1=false;
@@ -486,7 +480,7 @@ static bool _detectWinner(Graphe g, Pion p){
 			}else{
 				if(groups[i][j]->cells[2]->key=='B')
 					b1=true;
-				else if(groups[i][j]->cells[4]->key=='B')
+				else if(groups[i][j]->cells[5]->key=='B')
 					b2=true;
 			}
 		}

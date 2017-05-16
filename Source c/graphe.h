@@ -98,7 +98,7 @@ Cell** graphe_getGroups(Graphe g, Pion p);
 
 size_t graphe_countGroups(Graphe g, Pion p);
 
-/*
+/**
  * Description: retourne la taille d'un graphe passé en paramètre
  *
  * Précondition: g ≠ NULL
