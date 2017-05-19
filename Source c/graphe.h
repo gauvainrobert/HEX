@@ -114,7 +114,7 @@ int graphe_getSize(Graphe g);
 void graphe_print(Graphe g);
 
 /**
- * Description: retourne une chaine de caractères representant le graphe au format ascii
+ * Description: retourne une chaine de caractères representant les valeurs des cases du graphe au format ascii
  *
  * Précondition: g ≠ NULL
  */
