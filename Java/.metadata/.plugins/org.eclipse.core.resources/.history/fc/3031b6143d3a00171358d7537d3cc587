@@ -1,0 +1,13 @@
+package hex;
+
+public class InterfaceC {
+
+	static {
+		
+		System.load("InterfaceC");
+	}
+	
+	public static native int m1(String s, int i);
+	public static native String m2(String s);
+
+}

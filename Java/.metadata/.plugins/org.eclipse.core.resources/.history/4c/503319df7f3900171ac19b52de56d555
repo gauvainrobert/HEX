@@ -1,0 +1,9 @@
+package hex;
+import hex.InterfaceC;
+
+public class Test {
+	public static void main(String args[]) {
+		System.getenv("java.library.path");
+		
+	}
+}

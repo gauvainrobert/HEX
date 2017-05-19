@@ -1,0 +1,16 @@
+/**
+ * Description: Module permettant la gestion de l'intelligence artificielle afin de pouvoir jouer contre
+ * la machine au jeu HEX.
+ * 
+ * G. ROBERT - Univ. de Toulouse III - Paul Sabatier
+ */
+
+package hex;
+import java.io.File;
+
+public class IA {
+	
+	
+	
+	
+}

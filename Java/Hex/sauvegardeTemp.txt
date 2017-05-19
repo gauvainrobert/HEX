@@ -1,0 +1,12 @@
+\hex
+\board 3
+o.*
+o*.
+o..
+\endboard
+\game
+\play BLANC 0 0
+\play BLANC 1 0
+\play BLANC 2 0
+\endgame
+\endhex

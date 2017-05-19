@@ -1,0 +1,11 @@
+package hex;
+import hex.InterfaceC;
+
+public class Test {
+	public static void main(String args[]) {
+		//System.getenv("java.library.path");
+		int i = InterfaceC.m1("test",2);
+		String s = InterfaceC.m2("test");
+		System.out.println("i="+i+", s="+s);
+	}
+}

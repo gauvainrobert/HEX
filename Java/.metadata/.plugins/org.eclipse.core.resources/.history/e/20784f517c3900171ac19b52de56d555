@@ -1,0 +1,8 @@
+
+public class Test {
+	public static void main(String args[]) {
+		int i = InterfaceAvecC.m1("test",2);
+		String s = InterfaceAvecC.m2("test");
+		System.out.println("i="+i+", s="+s);
+	}
+}

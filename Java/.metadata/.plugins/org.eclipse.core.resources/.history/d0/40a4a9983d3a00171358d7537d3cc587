@@ -1,0 +1,15 @@
+import java.io.File;
+package hex;
+
+public class InterfaceC {
+
+	static {
+		
+		String path = new File("libInterfaceC.so").getAbsolutePath();
+        System.load(path);
+	}
+	
+	public static native int m1(String s, int i);
+	public static native String m2(String s);
+
+}
