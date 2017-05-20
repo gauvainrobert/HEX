@@ -1,5 +1,5 @@
 /******************************************************************
-* Menu                                                   		  *
+* Menu                                                      		  *
 * Description: Module de gestion des fichiers textes et du        *
 * platau de jeu                                                   *
 * F. ANTOINE - Univ. de Toulouse III - Paul Sabatier              *
@@ -217,7 +217,7 @@ import java.io.PrintWriter;
 		        }
 		catch (IOException exception){
 		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-		        }
+		}
 			
 			
 			
