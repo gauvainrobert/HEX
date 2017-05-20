@@ -164,10 +164,8 @@ public class Jouer {
 		int[] coordonnees_ia;
 		int x,y;
 		System.out.println("Allez, il est temps de jouer!\n");
-		
-		if(pionQuiCommence=='b'){
-			while(true){
-				Menu.afficher(graphe);
+		Menu.afficher(graphe);
+		while(true){
 				System.out.println("Tour numéro: " + nbTour);
 				if(pion==pionQuiCommence)
 					nbTour++;
@@ -182,17 +180,18 @@ public class Jouer {
 				
 				System.out.println("C'est au joueur "+j+" de jouer");
 				System.out.println("Il joue son "+ nbCoup +"e coup.");
-				if(pion==pionQuiCommence && !commence_ia){
+				if(!ia||(pionQuiCommence==pion&&!commence_ia)||(pionQuiCommence!=pion&&commence_ia)){
 					valeur=rentrerCoup(graphe,pion);
 					if(valeur=="Menu")
 						return -1;
 					graphe=valeur;
-				}else{
+				}else if(ia){
 					coordonnees_ia=IA.jouerCoupFacile(graphe,pion);
 					x=coordonnees_ia[0];
 					y=coordonnees_ia[1];
 					graphe=Plateau.rentrerCoup(graphe,pion,x,y);
 				}
+				Menu.afficher(graphe);
 				pionGagnant=gagnant(graphe);
 				if(pionGagnant!='.'){
 						System.out.println("Bravo! Le joueur "+j+" à gagner en "+nbCoup+ " coup!");
@@ -208,11 +207,5 @@ public class Jouer {
 				}
 			}
 		}
-		return 0;
-	}
-	
-	
-	
-	
-	
 }
+	
