@@ -1,0 +1,30 @@
+package hex.ihm.vue;
+
+import java.awt.Graphics;
+import java.awt.Polygon;
+import java.awt.Colors;
+
+import javax.swing.JPanel;
+ 
+public class Panneau extends JPanel {
+	private int size;
+	final static private int hex_size_px=40;
+	public Panneau(int size){
+		this.size=size;
+	}
+	
+	public Polygon getHex(int posX, int posY) {
+	   Polygon hex = new Polygon();
+	   for (int i = 0; i < 6; i++) {
+	  	 hex.addPoint((int) (posX + ((hex_size_px-1) * Math.cos((1 + i * 2) * Math.PI / 6))),
+	  			 					(int) (posY + ((hex_size_px-1) * Math.sin((1 + i * 2) * Math.PI / 6))));
+	   }
+	   hex.setFilledColor(Color.GREEN);
+	   return hex;
+	}
+  public void paintComponent(Graphics g){
+  	for(int i=0;i<size;i++)
+  		for(int j=0;j<size;j++)
+  			g.drawPolygon(this.getHex((int)((2*i+j+1)*(hex_size_px-1)*(Math.sqrt(3)/2)),(int)(hex_size_px*((3.0/2.0)*j+1))));
+  }           
+}

@@ -1,0 +1,12 @@
+package hex.ihm;
+
+public class Vue {
+
+	
+	
+	public static void main(String[] args) {
+		
+
+	}
+
+}

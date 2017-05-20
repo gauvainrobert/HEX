@@ -1,0 +1,16 @@
+package hex.ihm.vue;
+
+import hex.ihm.vue.Fenetre;
+import hex.ihm.vue.Panneau;
+import java.awt.Polygon;
+
+
+public class Test {
+	
+	public static void main(String[] args) {
+		Fenetre fen= new Fenetre("Hex");
+		Hexagone pan=new Hexagone(10);
+		fen.setContentPane(pan);
+	}
+
+}

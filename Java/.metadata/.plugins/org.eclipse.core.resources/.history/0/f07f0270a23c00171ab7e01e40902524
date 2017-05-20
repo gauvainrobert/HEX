@@ -1,0 +1,23 @@
+package hex.ihm.vue;
+
+import java.awt.Graphics;
+import java.awt.Polygon;
+
+import javax.swing.JPanel;
+ 
+public class Panneau extends JPanel {
+	
+	
+	
+	public Polygon getHex(int posX, int posY) {
+	   Polygon hex = new Polygon();
+	   for (int i = 0; i < 6; i++) {
+	  	 hex.addPoint((int) (posX + (10 * Math.cos((1 + i * 2) * Math.PI / 6))),
+	  			 					(int) (posY + (10 * Math.sin((1 + i * 2) * Math.PI / 6))));
+	   }
+	   return hex;
+	}
+  public void paintComponent(Graphics g){                
+    g.drawPolygon(this.getHex(10, 10));
+  }           
+}
