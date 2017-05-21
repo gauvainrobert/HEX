@@ -1,5 +1,5 @@
 /******************************************************************
-* Menu                                                      		  *
+* Menu                                                   		  *
 * Description: Module de gestion des fichiers textes et du        *
 * platau de jeu                                                   *
 * F. ANTOINE - Univ. de Toulouse III - Paul Sabatier              *
@@ -104,17 +104,40 @@ import java.io.PrintWriter;
 		 * 
 		 */
 		
-		public void sauvegarderTemporaire(String s,char pion, int x, int y){
+		public void sauvegarderTemporaire(String s,char pion, int x, int y,boolean ia, boolean commence_ia,char pionCommence,char difficulte){
 			
 			File f=new File("sauvegardeTemp.txt");
 			int taille=(int)Math.sqrt(s.length());
+			
 		if(pion=='.'){
 			
 			
 			try
 			{
 			    PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter (f)));
-			    
+			    /* premiere ligne pour l'ia (\ia) 
+			     * 'o' pour jeu contre ia, sinon 'n'
+			     * 'o' pour l'ia commence sinon 'n'
+			     * 'B' pour l'ia a les blancs sinon 'N'
+			     * et la difficulté, soit F/M/D/I pour
+			     *  Facile,Moyen,Difficile,Impossible
+			     * On peut donc avoir:
+			     * \ia o o B pour jouer contre l'ia, elle commence avc les BLANC
+			     * \ia n * * on joue sans l'ia
+			     * 
+			     */
+			    if(ia){
+			    	if(commence_ia)
+			    		fw.println("\\ia o o "+pionCommence+ " "+ difficulte);
+			    	else
+			    		if(pionCommence=='b')
+			    			fw.println("\\ia o o n");
+			    		else
+			    			fw.println("\\ia o o b");
+			    }
+			    else
+			    	fw.println("\\ia n * * "+pionCommence);
+			    	
 			    fw.println("\\hex");
 			    fw.println("\\board "+taille);
 			    
@@ -172,20 +195,33 @@ import java.io.PrintWriter;
 			try {
 		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
 		        String valeur = new String();
-		        
+		        int l=0;
 		        while (fr.ready() ) {
 		            	valeur += fr.readLine();
 		            	valeur += "\n";
 		            }
 		        fr.close();
 		        
+		        fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
+		        String valeur2 = new String();
+		        
+		        while (fr.ready() && l<3 ) {
+		            	valeur2 += fr.readLine();
+		            	valeur2 += "\n";
+		            	l++;
+		            }
+		        fr.close();
 		        
 		        try
 				{
+		        	String n="";
 		        	PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter (f)));
-		        	String nouveau=valeur.substring((13+((taille+1)*taille))+1,valeur.length());
-		        	System.out.println(nouveau);
-		        	String n="\\hex\n\\board "+ taille+ "\n";
+		        	String nouveau=valeur.substring((25+((taille+1)*taille)+1),valeur.length());
+		        	if(ia){
+		        		
+		        		n=valeur2;
+		        		
+		        	}
 		        	String ajout;
 		        	for(int i=0;i<s.length();i++){ 
 			    		n+=s.charAt(i);
@@ -217,7 +253,7 @@ import java.io.PrintWriter;
 		        }
 		catch (IOException exception){
 		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-		}
+		        }
 			
 			
 			
@@ -289,6 +325,7 @@ import java.io.PrintWriter;
 		public int recupererTaille(){
 			try {
 		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        fr.readLine();
 		        fr.readLine();
 		        int valeur;
 		        String s1=fr.readLine();  
@@ -463,6 +500,7 @@ import java.io.PrintWriter;
 		    try {
 		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
 		        fr.readLine();
+		        fr.readLine();
 		        String s1=fr.readLine();  /*prend la ligne "\board taille */
 		        char taille=s1.charAt(s1.length()-1);
 		        String valeur = new String();
@@ -490,6 +528,7 @@ import java.io.PrintWriter;
 		public String chargerPlateauTemp() {
 		    try {
 		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
+		        fr.readLine();
 		        fr.readLine();
 		        String s1=fr.readLine();  /*prend la ligne "\board taille */
 		        char taille=s1.charAt(s1.length()-1);
@@ -552,6 +591,48 @@ import java.io.PrintWriter;
 		    }
 		
 		/**
+		 * Description: efface le dernier coup joué dans 
+		 * le fichier sauvegardeTemp.txt
+		 */
+		
+		public void effacerDernierPion(){
+			try {
+				/* tableau de lignes qui contient le fichier ligne par ligne */
+				File f=new File("sauvegardeTemp.txt");
+				String tab[]=new String[500]; 
+				int i=0;
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
+		        while (fr.ready() ) {
+		        	
+		            	tab[i] = fr.readLine();
+		            	i++;
+		            	
+		            }
+		        
+		        fr.close();
+		        
+		        PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter (f)));
+			    
+			    for(int j=0;j<i;j++){
+			    	if(j!=i-3){
+			    		fw.print (tab[j]);
+			    		fw.print ("\n");
+			    	}
+			    }
+			    
+			    fw.close();
+		        
+		        
+		        
+		        }
+		catch (IOException exception){
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		    
+		        }
+		
+		    }
+		
+		/**
 		 * Description: met à jour le nombre de coup des
 		 * joueurs blanc, noir et le nombre de tour
 		 * quand on lance des parties chargées
@@ -578,13 +659,15 @@ import java.io.PrintWriter;
 		        
 		        int taille=recupererTaille();
 		        ;
-		        i=taille+4;
+		        i=taille+5;
+		        
 		        while(tab[i].charAt(1)!='e'){ /* s'arrete au 'e' de endgame */
 		        	
 		        	if(p%2==0){
-		        		nbTour++;/* icremente tous les deux tours de boucle */
+		        		nbTour++;/* incremente tous les deux tours de boucle */
 		        		p++;
 		        	}
+		        	
 		        	if(tab[i].charAt(6)=='B')
 		        		nbBlanc++;
 		        	else
@@ -610,7 +693,134 @@ import java.io.PrintWriter;
 			j.setNbCoupNoir(1);
 			j.setNbTour(1);
 		}
+		
+		public boolean recupererJouerContreIA(){
+			char c;
+			try {
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
+		        String s=fr.readLine();
+		        c=s.charAt(4);
+		        fr.close();
+		        if(c=='o')
+		        	return true;
+		        return false;
+		        }
+		catch (IOException exception){
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		    return false;
+		        }
+		
+		    }
+			
+		public boolean recupererIACommence(){
+			char c;
+			try {
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        String s=fr.readLine();
+		        c=s.charAt(6);
+		        fr.close();
+		        if(c=='o')
+		        	return true;
+		        return false;
+		        }
+		catch (IOException exception){
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		    return false;
+		        }
+		
+		    }
+		
+		public char recupererPionIA(){
+			char c;
+			try {
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        String s=fr.readLine();
+		        c=s.charAt(8);
+		        fr.close();
+		        return c;
+		        }
+		catch (IOException exception){
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		    return '.';
+		        }
+		
+		    }
+			
+		
+		/**
+		 * 
+		 * Deescription: recupere la difficulté de l'ia
+		 * dans le fichier sauvegarde.txt
+		 */
+		public String recupererDifficulteIA(){
+			char c;
+			try {
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        String s=fr.readLine();
+		        c=s.charAt(10);
+		        fr.close();
+		        if(c=='F')
+		        	return "Facile";
+		        else if(c=='M')
+		        	return "Moyen";
+		        else if(c=='D')
+		        	return "Difficile";
+		        else 
+		        	return "Impossible";
+		     
+		        }
+		catch (IOException exception){
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		    return "null";
+		        }
+		
+		    }
+		
+		/**
+		 * 
+		 * Description: retourne le nombre de coup joué
+		 */
+		public int nombreDeCoupJouer(){
+				int i;
+				int j=0;
+				try {
+					/* tableau de lignes qui contient le fichier ligne par ligne */
+					String tab[]=new String[500]; 
+					i=0;
+			        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
+			        while (fr.ready() ) {
+			        	
+			            	tab[i] = fr.readLine();
+			            	i++;
+			            	
+			            }
+			        
+			        fr.close();
+			        
+			        int taille=recupererTaille();
+			        ;
+			        i=taille+5;
+			        
+			        while(tab[i].charAt(1)!='e'){ /* s'arrete au 'e' de endgame */
+			        	
+			        	j++;
+			        	i++;
+			        	
+			        }
+			        return j;
+			        
+			        
+			    }
+			catch (IOException exception){
+			    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			    return -1;
+			        }
+			
+		}
+			
+			
 }
+
 		
 
 
