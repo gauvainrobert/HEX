@@ -1,8 +1,8 @@
-
-/**
- * Description: Classe pour importer les fonctions c 
- * à utiliser dans nos méthodes java
- */
+/******************************************************************
+* Plateau                                                  		  *
+* Description: Appelle des fonctions c                            *
+* F. ANTOINE - Univ. de Toulouse III - Paul Sabatier              *
+*******************************************************************/
 
 package hex;
 
