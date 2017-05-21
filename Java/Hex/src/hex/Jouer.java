@@ -1,5 +1,5 @@
 /******************************************************************
-* Menu                                                   		      *
+* Jouer                                                  		  *
 * Description: Module de gestion des tours de jeu                 *
 * F. ANTOINE - Univ. de Toulouse III - Paul Sabatier              *
 *******************************************************************/
@@ -114,7 +114,7 @@ public class Jouer {
 			
 		}
 		graphe=Plateau.rentrerCoup(graphe,pion,reponse1,reponse2);
-		m.sauvegarderTemporaire(graphe,pion,reponse1,reponse2);
+		m.sauvegarderTemporaire(graphe,pion,reponse1,reponse2,true,true,'.','.');
 	
 		
 		if(pion=='b'){
@@ -153,7 +153,7 @@ public class Jouer {
 	 * pré-condition:graphe!=null ⋀ ( pionQuiCommence='b' ⋁   pionQuiCommence='n' )
 	 */
 	
-	public int jouerPartie(String graphe,char pionQuiCommence, boolean ia, boolean commence_ia){
+	public int jouerPartie(String graphe,char pionQuiCommence, boolean ia, boolean commence_ia,char difficulte){
 		String blanc="BLANC";
 		String noir="NOIR";
 		String j;
@@ -162,7 +162,8 @@ public class Jouer {
 		char pion=pionQuiCommence;
 		String valeur;
 		int[] coordonnees_ia;
-		int x,y;
+		int x=0;
+		int y=0;
 		System.out.println("Allez, il est temps de jouer!\n");
 		Menu.afficher(graphe);
 		while(true){
@@ -186,10 +187,17 @@ public class Jouer {
 						return -1;
 					graphe=valeur;
 				}else{
-					coordonnees_ia=IA.jouerCoupFacile(graphe,pion);
+					if(difficulte=='F')
+						coordonnees_ia=IA.jouerCoupFacile(graphe,pion);
+					else if(difficulte=='M')
+						coordonnees_ia=IA.jouerCoupMoyen(graphe,pion);
+					else if(difficulte=='D')
+						coordonnees_ia=IA.jouerCoupDifficile(graphe,pion);
+					else
+						coordonnees_ia=IA.jouerCoupImpossible(graphe,pion);
 					x=coordonnees_ia[0];
 					y=coordonnees_ia[1];
-					graphe=Plateau.rentrerCoup(graphe,pion,x,y);
+					graphe=rentrerCoupIA(graphe,pion,x,y,difficulte);
 				}
 				Menu.afficher(graphe);
 				pionGagnant=gagnant(graphe);
@@ -207,5 +215,19 @@ public class Jouer {
 				}
 			}
 		}
+	
+	private String rentrerCoupIA(String graphe,char pion, int x, int y,char difficulte){
+		
+		if(pion=='b')
+			System.out.println("Le joueur BLANC à jouer à la case [" + x +","+ y+"]" );
+		else
+			System.out.println("Le joueur NOIR à jouer à la case [" + x +","+ y+"]" );
+		Menu m=new Menu();
+		graphe=Plateau.rentrerCoup(graphe,pion,x,y);
+		m.sauvegarderTemporaire(graphe,pion,x,y,true,true,'.',difficulte);
+		return graphe;
+		
+		
+	}
 }
 	
