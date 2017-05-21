@@ -142,7 +142,7 @@ static Node _createHead(Graphe g, Pion o, Pion p, CoordList* c){
 		_destroyCoord(&temp);
 		if((cond=((p==o && child->key>=n->key)
 			||(p!=o && child->key<=n->key)))){
-
+			coords=(*c)->values[i];
 			n->key=child->key;
 			n->child=realloc(n->child,(++children_len)*sizeof(Node));
 
@@ -155,10 +155,10 @@ static Node _createHead(Graphe g, Pion o, Pion p, CoordList* c){
 		}else{
 			_destroyNode(&child);
 		}
+
 		graphe_remove(&g,(*c)->values[i].x,(*c)->values[i].y);
 		if(cond){
 			i++;
-			coords=(*c)->values[i];
 			(*c)->values=realloc((*c)->values,sizeof(struct _coordinates));
 			(*c)->values[0]=coords;
 			(*c)->len=1;

@@ -354,8 +354,8 @@ static void _insertIntoGroups(Graphe g, Cell c){
 }
 
 Graphe graphe_insert(Graphe* g, Pion p, int x, int y){
-	assert(g!=NULL && *g!=NULL && x>=0 && x<(*g)->size && y>=0 && y<(*g)->size
-			&&(p==BLANC||p==NOIR) && graphe_getCellContent(*g,x,y)==VIDE);
+	assert(g!=NULL&&*g!=NULL&&x>=0&&x<(*g)->size&&y>=0&&y<(*g)->size&&
+		p==BLANC||p==NOIR&&graphe_getCellContent(*g,x,y)==VIDE);
 	Cell c=_getCell(*g,x,y);
 	c->key=p;
 

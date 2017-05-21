@@ -1,9 +1,9 @@
 \hex
 \board 2
-*o
+o.
 ..
 \endboard
 \game
-\play NOIR 0 0
+\play BLANC 0 0
 \endgame
 \endhex

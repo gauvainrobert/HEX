@@ -185,7 +185,7 @@ public class Jouer {
 					if(valeur=="Menu")
 						return -1;
 					graphe=valeur;
-				}else if(ia){
+				}else{
 					coordonnees_ia=IA.jouerCoupFacile(graphe,pion);
 					x=coordonnees_ia[0];
 					y=coordonnees_ia[1];
