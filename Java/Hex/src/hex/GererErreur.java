@@ -1,5 +1,5 @@
 /******************************************************************
-* Menu                                                   		  *
+* GererErreur                                                  		  *
 * Description: Module de gestion des erreurs de saisies           *
 * F. ANTOINE - Univ. de Toulouse III - Paul Sabatier              *
 *******************************************************************/
@@ -87,12 +87,12 @@ public class GererErreur {
 			} 
 			catch (java.util.InputMismatchException e) {
 				System.out.print("Vous avez rentrer une valeur incorrect, recommencez: ");
+				
 			}
 			sc.reset() ; 
 			
 		} while(!bsaisie) ; 
 	
-		
 		return lettre;
 	}
 	
@@ -127,7 +127,18 @@ public class GererErreur {
 	}
 	
 	
-	
+	public String choisirDiffculte(){
+		
+		String s;
+		System.out.println("Choisissez la difficulté (Facile/Moyen/Difficile/Immpossible): ");
+		Scanner sc = new Scanner(System.in);
+
+		while(!(s=sc.nextLine()).equals("Facile")&&!s.equals("Moyen")&&!s.equals("Difficile")&&!s.equals("Impossible"))
+			System.out.println("Veuillez réessayer:");
+		
+		return s;
+		
+	}
 	
 	
 	
