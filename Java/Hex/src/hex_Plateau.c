@@ -1,3 +1,9 @@
+/*********************************************************************
+* Interface Plateau                                                  *
+* Description: Interface utilisée pour faire le lien entre graphe.h  *
+* et le Plateau de jeu en java.                                      *
+* G. ROBERT - Univ. de Toulouse III - Paul Sabatier                  *
+**********************************************************************/
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>

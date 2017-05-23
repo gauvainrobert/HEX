@@ -71,7 +71,7 @@ public class Jouer {
 	private String rentrerCoup(String graphe,char pion){
 		Menu m=new Menu();
 		boolean b;
-		GererErreur g=new GererErreur();
+		Saisies g=new Saisies();
 		int reponse1;
 		int reponse2;
 		System.out.print("Veuillez donner la ligne à rentrer (ou -1 pour accéder au menu):");
@@ -167,9 +167,10 @@ public class Jouer {
 		System.out.println("Allez, il est temps de jouer!\n");
 		Menu.afficher(graphe);
 		while(true){
-				System.out.println("Tour numéro: " + nbTour);
 				if(pion==pionQuiCommence)
 					nbTour++;
+				System.out.println("Tour numéro: " + nbTour);
+				
 				
 				if(pion=='n'){
 					j=noir;
@@ -198,8 +199,8 @@ public class Jouer {
 					x=coordonnees_ia[0];
 					y=coordonnees_ia[1];
 					graphe=rentrerCoupIA(graphe,pion,x,y,difficulte);
+					Menu.afficher(graphe);
 				}
-				Menu.afficher(graphe);
 				pionGagnant=gagnant(graphe);
 				if(pionGagnant!='.'){
 						System.out.println("Bravo! Le joueur "+j+" à gagner en "+nbCoup+ " coup!");
@@ -219,9 +220,9 @@ public class Jouer {
 	private String rentrerCoupIA(String graphe,char pion, int x, int y,char difficulte){
 		
 		if(pion=='b')
-			System.out.println("Le joueur BLANC à jouer à la case [" + x +","+ y+"]" );
+			System.out.println("Le joueur BLANC à jouer à la case [" + x +","+ y+"]\n" );
 		else
-			System.out.println("Le joueur NOIR à jouer à la case [" + x +","+ y+"]" );
+			System.out.println("Le joueur NOIR à jouer à la case [" + x +","+ y+"]\n" );
 		Menu m=new Menu();
 		graphe=Plateau.rentrerCoup(graphe,pion,x,y);
 		m.sauvegarderTemporaire(graphe,pion,x,y,true,true,'.',difficulte);

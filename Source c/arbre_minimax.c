@@ -69,7 +69,7 @@ static void _destroyNode(Node* n){
  * Précondition: (p=NOIR ⋁ p=BLANC)
  */
 
-static char _oppositePion(Pion p){
+static Pion _oppositePion(Pion p){
 	assert(p==NOIR||p==BLANC);
 	return p==NOIR?BLANC:NOIR;
 }

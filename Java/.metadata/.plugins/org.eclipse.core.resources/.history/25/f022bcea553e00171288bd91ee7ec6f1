@@ -1,0 +1,64 @@
+package hex.ihm.menu;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+public class choixIACommence extends JPanel{
+	private ButtonGroup bg = new ButtonGroup();
+	private JRadioButton jr1 = new JRadioButton("oui");
+	private JRadioButton jr2 = new JRadioButton("non");
+	private boolean choix=true;
+	
+	public choixIACommence(){
+		super();
+		jr1.setSelected(true);
+		jr1.addActionListener(new StateListener(this));
+		jr2.addActionListener(new StateListener(this));
+		bg.add(jr1);
+		bg.add(jr2);
+		this.add(jr1);
+		this.add(jr2);		
+	}
+	
+	
+	
+	public boolean isChoix() {
+		return choix;
+	}
+
+
+
+	public void setChoix(boolean choix) {
+		this.choix = choix;
+	}
+
+
+
+	class StateListener implements ActionListener{
+		private choixIACommence c;
+		public StateListener(choixIACommence c){
+			this.c=c;
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(((JRadioButton)e.getSource()).getText().equals("oui"))
+				c.setChoix(true);
+			else
+				c.setChoix(false);
+					
+		}
+	}
+		 
+		
+
+	
+	class StateListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("source : " + ((JRadioButton)e.getSource()).getText() + " - état : " + ((JRadioButton)e.getSource()).isSelected());
+		}
+	}
+	 
+}

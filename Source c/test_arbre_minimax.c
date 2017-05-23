@@ -71,6 +71,7 @@ int main(void){
 	end=clock();
 	printf("Time to finish game: %.10f seconds \n",(double) (end-begin)/CLOCKS_PER_SEC);
 	
+	
 
 
 	graphe_destroy(&g);

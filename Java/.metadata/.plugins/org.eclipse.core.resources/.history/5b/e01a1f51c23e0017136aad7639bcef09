@@ -1,0 +1,12 @@
+package hex.ihm;
+
+import javax.swing.JPanel;
+
+public class PlateauPanel extends JPanel{
+
+	public PlateauPanel(){
+		
+	}
+	
+	
+}

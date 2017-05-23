@@ -1,0 +1,110 @@
+package hex.ihm;
+
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+/**
+ * Description: classe qui permet de creer la fenetre du jeu
+ * @author gauvain
+ *
+ */
+
+
+public class Fenetre extends JFrame implements Runnable{
+	CardLayout cl = new CardLayout();
+	JPanel content = new JPanel();
+	String[] listContent={"MENU","JEU"};
+	
+  private JMenuBar menuBar = new JMenuBar();
+  private JMenu Fichier = new JMenu("Fichier");
+  private JMenu Edition = new JMenu("Edition");
+  private JMenu Aide = new JMenu("Aide");
+  
+
+  private JMenuItem item1 = new JMenuItem("Quitter");
+  private JMenuItem item2 = new JMenuItem("Retour en arrière");
+  private JMenuItem item3 = new JMenuItem("Comment jouer ?");
+  private JMenuItem item4 = new JMenuItem("À propos de Hex");
+
+  
+  
+  public Fenetre(){
+    this.setSize(400, 800);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setLocationRelativeTo(null);
+     
+    this.Fichier.add(item1);
+
+    this.Fichier.addSeparator();
+    item1.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent arg0) {
+        System.exit(0);
+      }
+    });
+    this.Fichier.add(item1);  
+    this.Edition.add(item2);
+    this.Aide.add(item3);
+    this.Aide.add(item4);
+
+    this.menuBar.add(Fichier);
+    this.menuBar.add(Edition);
+    this.menuBar.add(Aide);
+    this.setJMenuBar(menuBar);
+    
+    JPanel card0 = new Menu(this);	
+    JPanel card1 = new JPanel();
+    card1.setBackground(Color.red);
+    
+    content.setLayout(cl);
+    
+    content.add(card0, listContent[0]);
+    content.add(card1, listContent[1]);
+    this.add(content);
+    
+    this.setVisible(true);
+  }
+  
+  public void run(){
+  	 Next n=new Next(cl);
+  	 n.start();
+  
+  
+  public class Next extends Thread{
+  	private CardLayout cl;
+  	public Next(CardLayout cl){
+  		super("Fentre next");
+  		this.cl=cl;  		
+  	}
+  	public void run(){
+  		cl.next(content);
+  	}
+  }
+  
+  
+  public static void main(String[] args){       
+	 	Fenetre fen = new Fenetre();	
+		
+		
+	}
+
+  
+}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

@@ -1,0 +1,21 @@
+package hex.ihm.menu;
+
+import javax.swing.JButton;
+
+public class commencerPartie extends JButton{
+	
+	
+	public commencerPartie(){
+		super("Commencer la partie!");
+	}
+	
+	this.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent event){
+      //Via cette instruction, on passe au prochain conteneur de la pile
+      cl.next(content);
+    }
+  });
+	
+	
+	
+}

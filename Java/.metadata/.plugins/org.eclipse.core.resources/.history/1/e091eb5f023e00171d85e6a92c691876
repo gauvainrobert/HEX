@@ -1,0 +1,73 @@
+package hex.ihm.vue;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+public class Fenetre extends JFrame {
+	private JTabbedPane onglet;
+	
+  private JMenuBar menuBar = new JMenuBar();
+  private JMenu Fichier = new JMenu("Fichier");
+  private JMenu Edition = new JMenu("Edition");
+  private JMenu Aide = new JMenu("Aide");
+  
+
+  private JMenuItem item1 = new JMenuItem("Quitter");
+  private JMenuItem item2 = new JMenuItem("Retour en arrière");
+  private JMenuItem item3 = new JMenuItem("Comment jouer ?");
+  private JMenuItem item4 = new JMenuItem("À propos de Hex");
+
+
+
+  public static void main(String[] args){
+    Fenetre zFen = new Fenetre();
+  }
+
+  public Fenetre(){
+    this.setSize(400, 200);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setLocationRelativeTo(null);
+
+     
+    this.Fichier.add(item1);
+
+    this.Fichier.addSeparator();
+    item1.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent arg0) {
+        System.exit(0);
+      }        
+    });
+    this.Fichier.add(item1);  
+    this.Edition.add(item2);
+    this.Aide.add(item3);
+    this.Aide.add(item4);
+
+    this.menuBar.add(Fichier);
+    this.menuBar.add(Edition);
+    this.menuBar.add(Aide);
+    this.setJMenuBar(menuBar);
+    
+    
+    Panneau[] tPan = { new Panneau(Color.RED), new Panneau(Color.GREEN)};
+    onglet = new JTabbedPane();
+    int i = 0;
+    for(Panneau pan : tPan){
+      //Méthode d'ajout d'onglet
+      onglet.add("Onglet n° "+(++i), pan);
+      //Vous pouvez aussi utiliser la méthode addTab
+      //onglet.addTab("Onglet n° "+(++i), pan);
+
+    }
+    //On passe ensuite les onglets au content pane
+    this.add(onglet);
+    
+    
+    this.setVisible(true);
+  }
+}

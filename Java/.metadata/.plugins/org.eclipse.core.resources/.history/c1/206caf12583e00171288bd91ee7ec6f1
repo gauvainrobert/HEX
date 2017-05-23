@@ -1,0 +1,44 @@
+package hex.ihm.menu;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JComboBox;
+
+
+/**
+ * Description: fonction qui permet de choisir la couleur du joueur qui commence la partie
+ * @author gauvain
+ *
+ */
+
+public class choixJoueur extends JComboBox {
+	private static String[] joueurs = {"Blanc","Noir"};
+	private char joueur='b';
+  public choixJoueur(){
+  	super(joueurs);
+  	this.addActionListener(new ItemAction(this));
+    this.setPreferredSize(new Dimension(100, 20));
+  }
+  
+  
+  public String getJoueur() {
+		return joueur;
+	}
+	public void setJoueur(String joueur) {
+		this.joueur = joueur;
+	}
+
+  class ItemAction implements ActionListener{
+  	private choixJoueur c;
+  	public ItemAction(choixJoueur c){
+  		this.c=c;
+  	}
+    public void actionPerformed(ActionEvent e) {
+      c.setJoueur((String)getSelectedItem());
+    }               
+  }
+}

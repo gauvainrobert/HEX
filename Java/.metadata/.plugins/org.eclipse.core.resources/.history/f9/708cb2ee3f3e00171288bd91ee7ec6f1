@@ -1,0 +1,24 @@
+package hex.ihm.menu;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
+public class commencerPartie extends JButton{
+	
+	
+	public commencerPartie(){
+		super("Commencer la partie!");
+		this.addActionListener(new ActionListener(){
+	    public void actionPerformed(ActionEvent event){
+	      System.out.println("commencer partie");
+	    }
+	  });
+	}
+	
+	
+	
+	
+	
+}

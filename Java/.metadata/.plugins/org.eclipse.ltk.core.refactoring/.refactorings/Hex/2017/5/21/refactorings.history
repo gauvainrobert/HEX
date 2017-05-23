@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;hex.GererErreur&apos; to &apos;Saisies&apos;&#x0A;- Original project: &apos;Hex&apos;&#x0A;- Original element: &apos;hex.GererErreur&apos;&#x0A;- Renamed element: &apos;hex.Saisies&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;GererErreur&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;hex{GererErreur.java[GererErreur" matchStrategy="1" name="Saisies" qualified="false" references="true" similarDeclarations="false" stamp="1495488158863" textual="false" version="1.0"/>
+</session>

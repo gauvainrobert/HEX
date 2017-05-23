@@ -1,0 +1,15 @@
+package hex.ihm;
+
+import hex.ihm.Fenetre;
+import hex.ihm.Hexagone;
+
+
+public class Test {
+	
+	public static void main(String[] args) {
+		Fenetre fen= new Fenetre("Hex");
+		Hexagone pan=new Hexagone(0,0,10);
+		fen.setContentPane(pan);
+	}
+
+}

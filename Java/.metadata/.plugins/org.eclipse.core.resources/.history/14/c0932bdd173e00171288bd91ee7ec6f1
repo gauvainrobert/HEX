@@ -1,0 +1,15 @@
+package hex.ihm.menu;
+
+import javax.swing.JPanel;
+
+
+public class choixOrdinateur extends JPanel{
+	 private JRadioButton jr1 = new JRadioButton("oui");
+	 private JRadioButton jr2 = new JRadioButton("non");
+	
+	public choixOrdinateur(){
+		super();
+		
+	}
+	
+}

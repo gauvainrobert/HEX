@@ -16,6 +16,12 @@
 
 typedef char Pion;
 typedef struct _cell * Cell;
+
+struct _cell{
+	char key;
+	Cell* cells;
+};
+
 typedef struct _graphe * Graphe;
 
 /* Constructeurs */
@@ -50,6 +56,14 @@ Graphe graphe_insert(Graphe* g, Pion p, int x, int y);
  */
 Graphe graphe_remove(Graphe* g, int x, int y);
 
+
+/**
+ * Description: copie un graphe g vers une adresse f donnée en paramètre
+ * 
+ *
+ * Précondition: g ≠ NULL
+ */
+void graphe_copy(Graphe* f, Graphe g);
 
 /* Projecteurs */
 
@@ -91,6 +105,21 @@ char graphe_getCellContent(Graphe g, int x, int y);
 Cell** graphe_getGroups(Graphe g, Pion p);
 
 /**
+ * Description: retourne la cellule de coordonnées (0,0) du graphe
+ *
+ * Précondition: g ≠ NULL
+ */
+Cell graphe_getHead(Graphe g);
+
+/**
+ * Description: retourne la cellule de coordonnées (0,0) du graphe
+ *
+ * Précondition: g ≠ NULL ⋀ x∈[0,n[ ⋀ y∈[0,n[
+ */
+Cell graphe_getCell(Graphe g, int x, int y);
+
+
+/**
  * Description: retourne le nombre des groupes de cellules dont le contenu est p
  *
  * Précondition: g ≠ NULL ⋀ (p=NOIR ⋁ p=BLANC)
@@ -128,6 +157,14 @@ char* graphe_toString(Graphe g);
 Graphe graphe_toGraphe(char* c);
 
 /* Destructeurs */
+
+/**
+ * Description: libère la mémoire d'une cellule c
+ * 
+ * Précondition: c ≠ NULL ⋀ *c ≠ NULL
+ */
+
+void graphe_freeCell(Cell* c);
 
 /**
  * Description: détruit un graphe g passé en paramètre

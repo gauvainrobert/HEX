@@ -1,0 +1,36 @@
+package hex.ihm;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import hex.ihm.menu.Difficulte;
+import hex.ihm.menu.choixOrdinateur;
+
+public class Menu extends JPanel{
+  private Color color = Color.white;
+  private String message = "";
+  private JLabel label_difficulte = new JLabel("Difficulté:");
+  private Difficulte combo = new Difficulte();
+  private choixOrdinateur menu_choix_ordi = new choixOrdinateur();
+  
+  public Menu(){}
+  public Menu(Color color){
+    this.color = color;
+    this.message = "MENU DE JEU";
+ 
+    this.add(label_difficulte);
+    this.add(combo);
+  }
+  public void paintComponent(Graphics g){
+    g.setColor(this.color);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    g.setColor(Color.white);
+    g.setFont(new Font("Arial", Font.BOLD, 15));
+    g.drawString(this.message, 10, 20);
+  }
+ 
+}

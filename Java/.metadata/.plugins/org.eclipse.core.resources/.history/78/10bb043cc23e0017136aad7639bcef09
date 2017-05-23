@@ -1,0 +1,5 @@
+package hex.ihm;
+
+public class PlateauPanel extends JPanel{
+
+}

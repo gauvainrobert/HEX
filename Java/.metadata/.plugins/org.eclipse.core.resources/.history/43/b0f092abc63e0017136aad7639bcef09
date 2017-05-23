@@ -1,0 +1,17 @@
+package hex.ihm;
+
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+
+public class PlateauPanel extends JPanel{
+
+	public PlateauPanel(){
+		this.setLayout(new GridLayout(12, 1));
+		this.setBackground(Color.red);
+		this.add(new Hexagone(0,0,100));
+	}
+	
+	
+}

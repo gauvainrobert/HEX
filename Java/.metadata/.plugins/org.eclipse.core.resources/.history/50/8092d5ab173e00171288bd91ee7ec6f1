@@ -1,0 +1,9 @@
+package hex.ihm.menu;
+
+import java.awt.JPanel;
+
+
+public class choixOrdinateur extends Jpanel{
+	
+	
+}

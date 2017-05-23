@@ -1,0 +1,15 @@
+package hex.ihm.menu;
+
+import javax.swing.JButton;
+
+public class commencerPartie extends JButton{
+	
+	
+	public commencerPartie(){
+		super("Commencer la partie!");
+	}
+	
+	
+	
+	
+}

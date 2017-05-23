@@ -1,0 +1,8 @@
+package hex.ihm.menu;
+
+import javax.swing.JComboBox;
+
+public class Difficulte extends JComboBox {
+	private String[] difficultes = {"Facile","Moyenne","Difficile","Impossible"};
+  private JComboBox combo = new JComboBox(difficultes);
+}

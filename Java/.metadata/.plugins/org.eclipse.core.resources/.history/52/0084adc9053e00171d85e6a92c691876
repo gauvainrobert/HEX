@@ -1,0 +1,95 @@
+package hex.ihm.vue;
+
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+public class Fenetre extends JFrame {
+	
+	CardLayout cl = new CardLayout();
+	JPanel content = new JPanel();
+	String[] listContent={"MENU","JEU"};
+	
+  private JMenuBar menuBar = new JMenuBar();
+  private JMenu Fichier = new JMenu("Fichier");
+  private JMenu Edition = new JMenu("Edition");
+  private JMenu Aide = new JMenu("Aide");
+  
+
+  private JMenuItem item1 = new JMenuItem("Quitter");
+  private JMenuItem item2 = new JMenuItem("Retour en arrière");
+  private JMenuItem item3 = new JMenuItem("Comment jouer ?");
+  private JMenuItem item4 = new JMenuItem("À propos de Hex");
+
+  private static int nb_panel=2;
+  private int indice=0;
+
+  public static void main(String[] args){
+    Fenetre zFen = new Fenetre();
+  }
+
+  public Fenetre(){
+    this.setSize(400, 200);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setLocationRelativeTo(null);
+
+     
+    this.Fichier.add(item1);
+
+    this.Fichier.addSeparator();
+    item1.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent arg0) {
+        System.exit(0);
+      }        
+    });
+    this.Fichier.add(item1);  
+    this.Edition.add(item2);
+    this.Aide.add(item3);
+    this.Aide.add(item4);
+
+    this.menuBar.add(Fichier);
+    this.menuBar.add(Edition);
+    this.menuBar.add(Aide);
+    this.setJMenuBar(menuBar);
+    
+    JPanel card1 = new JPanel();
+    card1.setBackground(Color.blue);		
+    JPanel card2 = new JPanel();
+    card2.setBackground(Color.red);
+    
+    content.setLayout(cl);
+    
+    content.add(card1, listContent[0]);
+    content.add(card2, listContent[1]);
+    
+    this.add(content);
+    
+    this.setVisible(true);
+  }
+  
+  public void next(){
+  	if(indice+1==nb_panel)
+  		indice=0;
+  	else
+  		indice++;
+	  cl.show(content, listContent[indice]);
+  }
+ }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

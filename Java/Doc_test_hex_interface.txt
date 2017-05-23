@@ -1,0 +1,31 @@
+/* Gérer les erreurs */
+
+	/*Joueur contre joueur */
+	Charger une partie si il n'y pas de sauvegarde: [ok]
+	Sauvegarder une partie si il n'y pas de partie lancée: [ok]
+	Sauvegarder une partie non commencé: [ok] /*on redemande au chargement celui qui commence */
+	Sauvegarder une partie fini: [ok]
+	Erreur de saise de caractère: [ok]
+	Erreur de saisie d'entier: [ok]
+	Erreur de saise de chaine: [ok]
+	Quitter jeu sans lancer de partie: [ok] /* on ne demande pas de sauvegarder */
+	Mauvaise coordonnées de coup joué: [ok]
+	Impossible de saisir coup si pas de coup joué: [ok]
+	
+
+
+	/*Joueur contre IA */
+	Si aucun coup du Joueur, impossible d'annuler coup: [ok]
+	Charger partie avec difficulté IA: [ok]
+	Charger partie avec qui commence: [ok]
+	
+
+/* Autres */
+
+Lancer une nouvelle partie en cours de partie: [ok]
+Afficher le bon nombre de tour: [ok]
+Affichef le bon nombre de coup par joueur: [ok]
+Proposer de sauvegarder avant de quitter: [ok]
+L'ia peut commencer: [ok]
+Afficher coordonnées coup joué: [ok]
+Detecter gagnant: [ok]

@@ -1,0 +1,51 @@
+package hex.ihm.vue;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Menu extends JPanel{
+  private Color color = Color.white;
+  private String message = "";
+  private JLabel label_difficulte = new JLabel("Difficulté:");
+  private String[] difficultes = {"Facile","Normale","Difficile","Impossible"};
+  private JComboBox combo = new JComboBox(difficultes);
+  
+  public Menu(){}
+  public Menu(Color color){
+    this.color = color;
+    this.message = "MENU DE JEU";
+    combo.addItemListener(new ItemState());
+    combo.addActionListener(new ItemAction());
+    combo.setPreferredSize(new Dimension(100, 20));
+ 
+    this.add(label_difficulte);
+    this.add(combo);
+  }
+  public void paintComponent(Graphics g){
+    g.setColor(this.color);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    g.setColor(Color.white);
+    g.setFont(new Font("Arial", Font.BOLD, 15));
+    g.drawString(this.message, 10, 20);
+  }
+  class ItemState implements ItemListener{
+    public void itemStateChanged(ItemEvent e) {
+      System.out.println("événement déclenché sur : " + e.getItem());
+    }               
+  }
+  class ItemAction implements ActionListener{
+    public void actionPerformed(ActionEvent e) {
+      System.out.println("ActionListener : action sur " + combo.getSelectedItem());
+    }               
+  }
+}

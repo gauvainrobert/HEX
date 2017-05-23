@@ -91,16 +91,25 @@ import java.io.PrintWriter;
 			System.out.println("5: Quitter le jeu");
 			System.out.println("=======================");
 			System.out.print("Que voulez vous faire? (Donnez le chiffre correspondant): ");
-			GererErreur g=new GererErreur();
+			Saisies g=new Saisies();
 			int valeur=g.gererErreurInt();
 			return g.verifierIntervalle(valeur,1,5);
 			
 				
 		}
+	
 		
 		/**
 		 * 
 		 * Description: sauvegarde s dans un fichier de transition avec sa taille
+		 * Si pion='a', peu importe les valeurs après on prend le fichier sauvegarde.txt
+		 * qu'on recopie dans sauvegardeTemp.txt
+		 * Si pion='.' sauvegarde une nouvelle partie dans sauvegardeTemp.txt
+		 * Sinon pour tout autre valeur de pion, on enregistre le coup donné x,y
+		 * dans le fichier sauvegardeTemp.txt a la suite des autres, sauf
+		 * si x=-1 on enregistre le graphe sans mettre de coup
+		 * (utile pour annuler le dernier coup, on met à jour le graphe
+		 * mais il ne faut pas rentrer de coup)
 		 * 
 		 */
 		
@@ -131,12 +140,12 @@ import java.io.PrintWriter;
 			    		fw.println("\\ia o o "+pionCommence+ " "+ difficulte);
 			    	else
 			    		if(pionCommence=='b')
-			    			fw.println("\\ia o o n");
+			    			fw.println("\\ia o n n"+" "+ difficulte);
 			    		else
-			    			fw.println("\\ia o o b");
+			    			fw.println("\\ia o n b"+" "+ difficulte);
 			    }
 			    else
-			    	fw.println("\\ia n * * "+pionCommence);
+			    	fw.println("\\ia n * * *");
 			    	
 			    fw.println("\\hex");
 			    fw.println("\\board "+taille);
@@ -205,7 +214,7 @@ import java.io.PrintWriter;
 		        fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
 		        String valeur2 = new String();
 		        
-		        while (fr.ready() && l<3 ) {
+		        while (fr.ready() && l<3 ) { /*prends juste les trois premières lignes */
 		            	valeur2 += fr.readLine();
 		            	valeur2 += "\n";
 		            	l++;
@@ -216,7 +225,13 @@ import java.io.PrintWriter;
 				{
 		        	String n="";
 		        	PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter (f)));
-		        	String nouveau=valeur.substring((25+((taille+1)*taille)+1),valeur.length());
+		        	String nouveau;
+		        	if(taille<9)
+		        		/*26 correspond au nombre d'octet entre le debut et le graphe */
+		        		nouveau=valeur.substring((26+((taille+1)*taille)),valeur.length()); 
+		        	else
+		        		/* 1 octet de plus si taille>=10 */
+		        		nouveau=valeur.substring((27+((taille+1)*taille)),valeur.length());
 		        	if(ia){
 		        		
 		        		n=valeur2;
@@ -232,12 +247,16 @@ import java.io.PrintWriter;
 		        	
 		        	n+=nouveau; /* contient le nouveau graphe avc les coups deja joué */
 		        	nouveau=n.substring(0,n.length()-17);
-		        
-		        	if(pion=='b')
-						ajout="\\play BLANC"+ " " + x + " "+ y +"\n" ;
-					else
-						ajout="\\play NOIR"+ " " + x + " "+ y +"\n" ;
-		        	nouveau+=ajout+"\\endgame\n\\endhex";
+		        	
+		        	if(x!=-1){ /* si le parametre x est à -1 on modifie juste le graphe */
+		        		if(pion=='b')
+		        			ajout="\\play BLANC"+ " " + x + " "+ y +"\n" ;
+		        		else
+		        			ajout="\\play NOIR"+ " " + x + " "+ y +"\n" ;
+		        	nouveau+=ajout;
+		        	
+		        	}
+		        	nouveau+="\\endgame\n\\endhex";
 
 				    for(int i=0;i<nouveau.length();i++){
 				    		fw.print (nouveau.charAt(i));
@@ -273,11 +292,10 @@ import java.io.PrintWriter;
 		
 		public void sauvegarder(){
 				String s=chargerFichierTemp();
-				File f=new File("sauvegarde.txt");
 				int taille=s.length();
 				try
 				{
-				    PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter (f)));
+				    PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter ("sauvegarde.txt")));
 				    
 				    for(int i=0;i<taille;i++)
 				    		fw.print (s.charAt(i));
@@ -285,7 +303,7 @@ import java.io.PrintWriter;
 				    fw.close();
 				}
 				catch (IOException exception){
-				    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+				    System.out.println ("Erreur grave lors de la lecture : " + exception.getMessage());
 				}
 		}
 		
@@ -324,14 +342,13 @@ import java.io.PrintWriter;
 		
 		public int recupererTaille(){
 			try {
-		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
 		        fr.readLine();
 		        fr.readLine();
 		        int valeur;
 		        String s1=fr.readLine();  
 		        char taille=s1.charAt(s1.length()-2);
 		        if(taille>='1' && taille<='2'){
-		        	System.out.println("ok");
 		        	if(taille=='1'){
 		        		valeur=10;
 		        		for(int j=0;j<(int)s1.charAt(s1.length()-1)-'0';j++)
@@ -501,11 +518,11 @@ import java.io.PrintWriter;
 		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
 		        fr.readLine();
 		        fr.readLine();
-		        String s1=fr.readLine();  /*prend la ligne "\board taille */
-		        char taille=s1.charAt(s1.length()-1);
+		        fr.readLine();
+		        int taille=recupererTaille();
 		        String valeur = new String();
 		        int i=0;
-		        while (fr.ready() && i+'0'<taille ) {
+		        while (fr.ready() && i<taille ) {
 		        	
 		            	valeur += fr.readLine();
 		            	i++;
@@ -530,11 +547,11 @@ import java.io.PrintWriter;
 		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
 		        fr.readLine();
 		        fr.readLine();
-		        String s1=fr.readLine();  /*prend la ligne "\board taille */
-		        char taille=s1.charAt(s1.length()-1);
+		        fr.readLine();
+		        int taille=recupererTaille();
 		        String valeur = new String();
 		        int i=0;
-		        while (fr.ready() && i+'0'<taille ) {
+		        while (fr.ready() && i<taille ) {
 		        	
 		            	valeur += fr.readLine();
 		            	i++;
@@ -658,9 +675,7 @@ import java.io.PrintWriter;
 		        fr.close();
 		        
 		        int taille=recupererTaille();
-		        ;
 		        i=taille+5;
-		        
 		        while(tab[i].charAt(1)!='e'){ /* s'arrete au 'e' de endgame */
 		        	
 		        	if(p%2==0){
@@ -705,9 +720,9 @@ import java.io.PrintWriter;
 		        	return true;
 		        return false;
 		        }
-		catch (IOException exception){
-		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-		    return false;
+			catch (IOException exception){
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+				return false;
 		        }
 		
 		    }
@@ -715,7 +730,7 @@ import java.io.PrintWriter;
 		public boolean recupererIACommence(){
 			char c;
 			try {
-		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
 		        String s=fr.readLine();
 		        c=s.charAt(6);
 		        fr.close();
@@ -723,28 +738,28 @@ import java.io.PrintWriter;
 		        	return true;
 		        return false;
 		        }
-		catch (IOException exception){
-		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-		    return false;
-		        }
+			catch (IOException exception){
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+				return false;
+			}
 		
-		    }
+		}
 		
 		public char recupererPionIA(){
 			char c;
 			try {
-		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
 		        String s=fr.readLine();
 		        c=s.charAt(8);
 		        fr.close();
 		        return c;
 		        }
-		catch (IOException exception){
-		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-		    return '.';
-		        }
+			catch (IOException exception){
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+				return '.';
+			}
 		
-		    }
+	  }
 			
 		
 		/**
@@ -755,7 +770,7 @@ import java.io.PrintWriter;
 		public String recupererDifficulteIA(){
 			char c;
 			try {
-		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegarde.txt"));
+		        BufferedReader fr = new BufferedReader(new FileReader ("sauvegardeTemp.txt"));
 		        String s=fr.readLine();
 		        c=s.charAt(10);
 		        fr.close();

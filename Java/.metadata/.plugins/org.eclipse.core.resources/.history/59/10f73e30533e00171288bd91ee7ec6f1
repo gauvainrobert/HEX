@@ -1,0 +1,112 @@
+package hex.ihm;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import hex.ihm.menu.Difficulte;
+import hex.ihm.menu.choixIACommence;
+import hex.ihm.menu.choixJoueur;
+import hex.ihm.menu.choixOrdinateur;
+import hex.ihm.menu.choixTaillePlateau;
+
+
+public class Menu extends JPanel{
+  private JLabel label_difficulte = new JLabel("Difficulté de l'IA:");
+  private JLabel label_choix_ordinateur = new JLabel("Jouer contre l'ordinateur:");
+  private Difficulte menu_difficulte = new Difficulte();
+  private JLabel label_choix_joueur = new JLabel("Joueur qui commence:");
+  private JLabel label_menu = new JLabel("MENU DU JEU",SwingConstants.CENTER);
+  private choixJoueur menu_choix_joueur = new choixJoueur();
+  private choixOrdinateur menu_choix_ordinateur = new choixOrdinateur();
+  private choixIACommence menu_commence_ia=new choixIACommence();
+  private JLabel label_commence_ia = new JLabel("Est-ce que l'ordinateur commence ?:");
+  private JLabel label_taille = new JLabel("Taille du plateau:");
+  private choixTaillePlateau menu_taille_plateau=new choixTaillePlateau();
+  private JButton commencerPartie=new JButton("Commencer la partie!");
+  private char pion='b';
+	private String difficulte="Facile";
+	private boolean ia=true;
+	private boolean commence_ia=false;
+	private int taille=11;
+	
+	
+	/**
+	 * 
+	 * Description: Permet de jouer au jeu complet,
+	 * gère nouvelle partie, sauvegarde, chargement,
+	 * annuler dernier coup, choix taille plateau etc...
+	 * 
+	 */
+	
+	public Menu(){
+    this.setLayout(new GridLayout(12, 1));
+    this.add(label_menu);
+    this.add(label_difficulte);
+    this.add(menu_difficulte);
+    this.add(label_choix_ordinateur);
+    this.add(menu_choix_ordinateur);
+    this.add(label_commence_ia);
+    this.add(menu_commence_ia);
+    this.add(label_choix_joueur);
+    this.add(menu_choix_joueur);
+    this.add(label_taille);
+    this.add(menu_taille_plateau);
+    this.add(commencerPartie);
+  }
+	
+	public char getPion() {
+		return pion;
+	}
+
+	public String getDifficulte() {
+		return difficulte;
+	}
+
+	public boolean isIa() {
+		return ia;
+	}
+
+	public boolean isCommence_ia() {
+		return commence_ia;
+	}
+
+	public int getTaille() {
+		return taille;
+	}
+
+	
+	
+	public void setPion(char pion) {
+		this.pion = pion;
+	}
+
+	public void setDifficulte(String difficulte) {
+		this.difficulte = difficulte;
+	}
+
+	public void setIa(boolean ia) {
+		this.ia = ia;
+	}
+
+	public void setCommenceIa(boolean commence_ia) {
+		this.commence_ia = commence_ia;
+	}
+
+	public void setTaille(int taille) {
+		this.taille = taille;
+	}
+	
+	this.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent event){
+      System.out.println("commencer partie");
+    }
+  });
+	
+ 
+}

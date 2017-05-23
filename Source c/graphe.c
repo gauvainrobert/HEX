@@ -6,10 +6,7 @@
 #include "graphe.h"
 
 
-struct _cell{
-	char key;
-	Cell* cells;
-};
+
 struct _graphe{
 	Cell head;
 	Cell** groupsW; // memorise les groupes de cellules blanches
@@ -204,13 +201,9 @@ Graphe graphe_toGraphe(char* c){
 	return g;
 }
 
-/**
- * Description: libère la mémoire d'une cellule c
- * 
- * Précondition: c ≠ NULL ⋀ *c ≠ NULL
- */
 
-static void _freeCell(Cell* c){
+
+void graphe_freeCell(Cell* c){
 	assert(c!=NULL && *c!=NULL);
 	free((*c)->cells);
 	free(*c);
@@ -236,18 +229,18 @@ void graphe_destroy(Graphe* g){
 	
 	for(;itr->cells[2]->key!='B'||itr->cells[3]->key!='W';){
 		if(itr->cells[2]->key=='B'){
-			_freeCell(&itr);
+			graphe_freeCell(&itr);
 			itr=mem1;
 			mem1=itr->cells[3];
 		}else{
 			mem2=itr->cells[2];
-			_freeCell(&itr);
+			graphe_freeCell(&itr);
 			itr=mem2;
 		}
 	}
-	_freeCell(&itr->cells[2]);
-	_freeCell(&itr->cells[3]);
-	_freeCell(&itr);
+	graphe_freeCell(&itr->cells[2]);
+	graphe_freeCell(&itr->cells[3]);
+	graphe_freeCell(&itr);
 	free(*g);
 
 }
@@ -355,7 +348,7 @@ static void _insertIntoGroups(Graphe g, Cell c){
 
 Graphe graphe_insert(Graphe* g, Pion p, int x, int y){
 	assert(g!=NULL&&*g!=NULL&&x>=0&&x<(*g)->size&&y>=0&&y<(*g)->size&&
-		p==BLANC||p==NOIR&&graphe_getCellContent(*g,x,y)==VIDE);
+		(p==BLANC||p==NOIR)&&graphe_getCellContent(*g,x,y)==VIDE);
 	Cell c=_getCell(*g,x,y);
 	c->key=p;
 
@@ -500,4 +493,42 @@ char graphe_detectWinner(Graphe g){
 
 int graphe_getSize(Graphe g){
 	return g->size;
+}
+
+
+void graphe_copy(Graphe* f, Graphe g){
+	assert(g!=NULL);
+	int i,j;
+	(*f)=graphe_create(graphe_getSize(g));
+
+	Cell itr,mem;
+	i=0;
+	j=0;
+	
+
+	itr=g->head;
+	mem=itr;
+	for(;itr->key!='W';){
+		if(itr->key!=VIDE)
+			graphe_insert(f,itr->key,i,j);
+
+		if(itr->cells[2]->key=='B'){
+			j=0;
+			i++;
+			itr=mem->cells[3];
+			mem=itr;
+		}else{
+			itr=itr->cells[2];
+			j++;
+		}
+	}
+}
+
+Cell graphe_getHead(Graphe g){
+	return g->head;
+}
+
+Cell graphe_getCell(Graphe g, int x, int y){
+	assert(g!=NULL && x>=0 && x<g->size && y>=0 && y<g->size);
+	return _getCell(g,x,y);
 }

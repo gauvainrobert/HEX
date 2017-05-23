@@ -27,8 +27,8 @@ public class IHM {
 		boolean commence_ia=false;
 		String graphe=null;
 		int taille=0;
-		GererErreur g=new GererErreur();
-		Jouer j=new Jouer(1,1,1);
+		Saisies g=new Saisies();
+		Jouer j=new Jouer(1,1,0);
 		
 		
 		while(choix!=5){
@@ -43,6 +43,7 @@ public class IHM {
 			
 			/* Nouvelle partie*/
 			else if(choix==1){
+				j=new Jouer(1,1,0);
 				System.out.print("Veuillez choisir la taille du plateau (entre 2 et 20): ");
 				taille=g.gererErreurInt();
 				taille=g.verifierIntervalle(taille, 2,20);
@@ -57,7 +58,7 @@ public class IHM {
 				m.sauvegarderTemporaire(graphe,'.',0,0,ia,commence_ia,pion,difficulte.charAt(0));
 				choix=j.jouerPartie(graphe,pion,ia,commence_ia,difficulte.charAt(0));
 				if(choix==-2){ /* -2 signifie que la partie est fini, on efface le graphe */
-					graphe="null";
+					graphe=null;
 					choix=-1;
 				}
 				
@@ -65,7 +66,6 @@ public class IHM {
 			
 			/* Sauvegarder partie */
 			else if(choix==2){
-				
 				/*Empêche de sauvegarder si aucune partie n'est lancée */
 				if(taille==0){
 					System.out.println("Impossible de sauvegarder, pas de partie en cours");
@@ -110,7 +110,7 @@ public class IHM {
 						pion=g.gererErreurChar('b','n');
 						choix=j.jouerPartie(graphe,pion,ia,commence_ia,'.');
 					}
-					else if(pion=='b'){ /*Chargement d'une partie sauvegarder d'en sauvegarde.txt */
+					else if(pion=='b'){ /*Chargement d'une partie sauvegarder dans sauvegarde.txt */
 						m.nbCoup(j);
 						difficulte=m.recupererDifficulteIA();
 						if(m.recupererPionIA()=='b')
@@ -121,7 +121,7 @@ public class IHM {
 					else{
 						m.nbCoup(j);
 						difficulte=m.recupererDifficulteIA();
-						if(m.recupererPionIA()=='b')
+						if(m.recupererPionIA()=='n')
 							choix=j.jouerPartie(graphe,'b',m.recupererJouerContreIA(),false,difficulte.charAt(0));
 						else
 							choix=j.jouerPartie(graphe,'b',m.recupererJouerContreIA(),true,difficulte.charAt(0));
@@ -135,7 +135,7 @@ public class IHM {
 				graphe=m.chargerPlateauTemp();
 				int taille_test=m.recupererTaille();
 				int x=m.recuperDernierCoupX();				
-				int y=m.recuperDernierCoupY();				
+				int y=m.recuperDernierCoupY();		
 				if(x<0 || x>taille_test-1 || y<0 || y>taille_test-1 ){
 					System.out.println("Impossible de supprimer coup, pas de coup joué.");
 					System.out.println("retour au menu...");
@@ -144,7 +144,7 @@ public class IHM {
 				/* si un coup joué par l'ia mais pas par un joueur on ne peut pas annuler le coup */
 				else if(m.recupererJouerContreIA() && m.recupererIACommence() && m.nombreDeCoupJouer()<=1){
 					System.out.println("Impossible de supprimer coup, pas de coup joué.");
-					System.out.println("retour au menu...1");
+					System.out.println("retour au menu...");
 					choix=-1;
 					
 				}
@@ -211,6 +211,7 @@ public class IHM {
 						graphe=Plateau.annulerDernierCoup(graphe,x,y);
 						pion=m.chargerDernierPion();
 						m.effacerDernierPion();
+						m.sauvegarderTemporaire(graphe,'x',-1,y,true,true,'.','.');
 						if(pion=='b'){
 							m.nbCoup(j);
 							choix=j.jouerPartie(graphe,'b',false,false,'.');
@@ -226,10 +227,9 @@ public class IHM {
 			
 			/* Quitter le jeu */
 			if(choix==5){
-				
-				if(graphe!="null"){
+				if(graphe!=null){
 					System.out.println("Voulez vous sauvegarder avant de quitter? (o/n)");
-					char reponse=g.gererErreurChar('b','n');
+					char reponse=g.gererErreurChar('o','n');
 					if(reponse=='o')
 						m.sauvegarder();
 					System.out.println("Merci d'avoir joué avec nous. A bientôt!");

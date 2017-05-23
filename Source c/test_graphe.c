@@ -27,7 +27,7 @@ int main(void){
 	int n=20;
 	int x,y;
 	char* c;
-	Graphe g,f,h,i,k;
+	Graphe g,f,h,i,k,l;
 	g=graphe_create(n);
 	f=graphe_create(2);
 	h=graphe_create(3);
@@ -98,10 +98,17 @@ int main(void){
 		test("Test detect winner in Empty Graphe",graphe_detectWinner(k)==VIDE);
 		graphe_destroy(&k);
 	}
+	printf("Test copy Graphe\n");
+	graphe_print(i);
+	graphe_copy(&l,i);
+	graphe_print(l);
+
+
 	graphe_destroy(&g);
 	graphe_destroy(&f);
 	graphe_destroy(&h);
 	graphe_destroy(&i);
+	graphe_destroy(&l);
 	printf("Tests %d/%d passed\n", passed, total);
   return total - passed;
 }

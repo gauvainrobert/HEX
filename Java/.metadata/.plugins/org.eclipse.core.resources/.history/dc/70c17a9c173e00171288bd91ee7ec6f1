@@ -1,0 +1,6 @@
+package hex.ihm.menu;
+
+public class choixOrdinateur extends Jpanel{
+	
+	
+}

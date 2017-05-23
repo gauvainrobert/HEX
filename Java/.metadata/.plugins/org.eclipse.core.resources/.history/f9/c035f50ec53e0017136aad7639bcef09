@@ -1,0 +1,19 @@
+package hex.ihm;
+
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+public class PlateauPanel extends JPanel{
+
+	public PlateauPanel(){
+		
+	}
+	public void paintComponent(Graphics g){
+    g.setColor(Color.white);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    this.add(new Hexagone(0,0,100));
+    
+  }
+	
+}

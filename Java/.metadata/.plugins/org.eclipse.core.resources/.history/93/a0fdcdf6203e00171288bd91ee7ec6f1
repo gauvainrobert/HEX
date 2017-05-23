@@ -1,0 +1,48 @@
+package hex.ihm;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import hex.ihm.menu.Difficulte;
+import hex.ihm.menu.choixJoueur;
+import hex.ihm.menu.choixOrdinateur;
+import hex.ihm.menu.commencerPartie;
+
+public class Menu extends JPanel{
+  private Color color = Color.white;
+  private String message = "";
+  private JLabel label_difficulte = new JLabel("Difficulté:");
+  private JLabel label_choix_ordinateur = new JLabel("Jouer contre l'ordinateur:");
+  private Difficulte combo = new Difficulte();
+  private JLabel label_choix_joueur = new JLabel("Joueur qui commence:");
+  private choixJoueur menu_choix_joueur = new choixJoueur();
+  private choixOrdinateur menu_choix_ordinateur = new choixOrdinateur();
+  private commencerPartie menu_bouton_cp=new commencerPartie();
+  
+  public Menu(){}
+  public Menu(Color color){
+    this.color = color;
+    this.message = "MENU DE JEU";
+    this.setLayout(new GridLayout(8, 1));
+    this.add(label_difficulte);
+    this.add(combo);
+    this.add(label_choix_ordinateur);
+    this.add(menu_choix_ordinateur);
+    this.add(label_choix_joueur);
+    this.add(menu_choix_joueur);
+    
+  }
+  public void paintComponent(Graphics g){
+    g.setColor(this.color);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    g.setColor(Color.white);
+    g.setFont(new Font("Arial", Font.BOLD, 15));
+    g.drawString(this.message, 10, 20);
+  }
+ 
+}

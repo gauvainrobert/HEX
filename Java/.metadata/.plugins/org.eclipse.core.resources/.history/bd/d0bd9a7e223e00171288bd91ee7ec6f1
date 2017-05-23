@@ -1,0 +1,43 @@
+package hex.ihm;
+
+import java.awt.GridLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import hex.ihm.menu.Difficulte;
+import hex.ihm.menu.choixIACommence;
+import hex.ihm.menu.choixJoueur;
+import hex.ihm.menu.choixOrdinateur;
+import hex.ihm.menu.commencerPartie;
+
+public class Menu extends JPanel{
+
+  private JLabel label_difficulte = new JLabel("Difficulté:");
+  private JLabel label_choix_ordinateur = new JLabel("Jouer contre l'ordinateur:");
+  private Difficulte combo = new Difficulte();
+  private JLabel label_choix_joueur = new JLabel("Joueur qui commence:");
+  private JLabel label_menu = new JLabel("MENU DU JEU",SwingConstants.CENTER);
+  private choixJoueur menu_choix_joueur = new choixJoueur();
+  private choixOrdinateur menu_choix_ordinateur = new choixOrdinateur();
+  private commencerPartie menu_bouton_cp=new commencerPartie();
+  private choixIACommence menu_commence_ia=new choixIACommence();
+  private JLabel label_commcence_ia = new JLabel("Est-ce que l'ordinateur commence ?:");
+  public Menu(){
+    this.setLayout(new GridLayout(8, 1));
+    this.add(label_menu);
+    this.add(label_difficulte);
+    this.add(combo);
+    this.add(label_choix_ordinateur);
+    this.add(menu_choix_ordinateur);
+    this.add(choixIACommence)
+    this.add(label_choix_joueur);
+    this.add(menu_choix_joueur);
+    this.add(menu_bouton_cp);
+    
+    
+  }
+
+ 
+}

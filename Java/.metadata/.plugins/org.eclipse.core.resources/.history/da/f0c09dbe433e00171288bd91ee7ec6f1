@@ -1,0 +1,85 @@
+/******************************************************************
+* IHM                                                    		      *
+* Description: Module pour jouer au jeu HEX entre deux joueurs    *
+* F. ANTOINE - Univ. de Toulouse III - Paul Sabatier              *
+*******************************************************************/
+
+package hex;
+
+import hex.ihm.Fenetre;
+
+public class IHM {
+	private char pion='b';
+	private String difficulte="Facile";
+	private boolean ia=true;
+	private boolean commence_ia=false;
+	private int taille=11;
+	
+	public IHM(){
+		taille=11;
+	}
+	
+	/**
+	 * 
+	 * Description: Permet de jouer au jeu complet,
+	 * gère nouvelle partie, sauvegarde, chargement,
+	 * annuler dernier coup, choix taille plateau etc...
+	 * 
+	 */
+	
+	public char getPion() {
+		return pion;
+	}
+
+	public String getDifficulte() {
+		return difficulte;
+	}
+
+	public boolean isIa() {
+		return ia;
+	}
+
+	public boolean isCommence_ia() {
+		return commence_ia;
+	}
+
+	public int getTaille() {
+		return taille;
+	}
+
+	
+	
+	public void setPion(char pion) {
+		this.pion = pion;
+	}
+
+	public void setDifficulte(String difficulte) {
+		this.difficulte = difficulte;
+	}
+
+	public void setIa(boolean ia) {
+		this.ia = ia;
+	}
+
+	public void setCommence_ia(boolean commence_ia) {
+		this.commence_ia = commence_ia;
+	}
+
+	public void setTaille(int taille) {
+		this.taille = taille;
+	}
+
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args){       
+		
+		IHM ihm=new IHM();
+		
+		Fenetre fen= new Fenetre(ihm);
+			
+	}
+}

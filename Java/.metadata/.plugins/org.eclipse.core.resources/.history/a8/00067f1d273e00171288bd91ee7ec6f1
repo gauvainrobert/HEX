@@ -1,0 +1,30 @@
+package hex.ihm.menu;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JComboBox;
+
+public class choixJoueur extends JComboBox {
+	private static String[] joueurs = {"Blanc","Noir"};
+  public choixJoueur(){
+  	super(joueurs);
+  	this.addActionListener(new ItemAction());
+    this.setPreferredSize(new Dimension(100, 20));
+  }
+  
+  
+  class ItemState implements ItemListener{
+    public void itemStateChanged(ItemEvent e) {
+      System.out.println("événement déclenché sur : " + e.getItem());
+    }               
+  }
+  class ItemAction implements ActionListener{
+    public void actionPerformed(ActionEvent e) {
+      System.out.println("ActionListener : action sur " + getSelectedItem());
+    }               
+  }
+}

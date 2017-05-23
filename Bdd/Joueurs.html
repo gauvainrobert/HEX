@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+  #mld .normal { }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>JOUEUR</span> (
+    <span class='primary'>num. idJoueur</span>,
+    <span class='normal'>pseudo</span>,
+    <span class='normal'>email</span>,
+    <span class='normal'>annee de naissance</span>
+  )
+</div>
+<div>
+  <span class='relation'>JOUER</span> (
+    <span class='foreign primary'>num. idJoueur</span>,
+    <span class='foreign primary'>num. idPartie</span>
+  )
+</div>
+<div>
+  <span class='relation'>PARTIE</span> (
+    <span class='primary'>num. idPartie</span>,
+    <span class='normal'>date</span>,
+    <span class='normal'>joueur1</span>,
+    <span class='normal'>joueur2</span>,
+    <span class='normal'>gagnant</span>,
+    <span class='normal'>premier coup</span>
+  )
+</div>
+</div>
+</body>
+</html>

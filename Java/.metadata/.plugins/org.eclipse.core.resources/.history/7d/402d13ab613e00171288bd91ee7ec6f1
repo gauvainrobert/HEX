@@ -1,0 +1,47 @@
+package hex.ihm.menu;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+/**
+ * Classe qui permet de créer un slider pour choisir la taille du plateau de jeu
+ * 
+ * @author gauvain
+ *
+ */
+
+public class choixTaillePlateau extends JPanel{
+  private JLabel label = new JLabel("Valeur actuelle : 11");
+  private int taille=11;
+  
+  public int getTaille() {
+		return taille;
+	}
+
+	public void setTaille(int taille) {
+		this.taille = taille;
+	}
+
+	public choixTaillePlateau(){
+    super();
+    JSlider slide = new JSlider();
+   
+    slide.setMaximum(20);
+    slide.setMinimum(2);
+    slide.setValue(11);
+    slide.setPaintTicks(true);
+    slide.setPaintLabels(true);
+    slide.setMinorTickSpacing(1);
+    slide.setMajorTickSpacing(5);
+    slide.addChangeListener(new ChangeListener(){
+      public void stateChanged(ChangeEvent event){
+        setTaille(((JSlider)event.getSource()).getValue());
+      }
+    });
+    this.add(label);
+    this.add(slide);
+  }   
+}
