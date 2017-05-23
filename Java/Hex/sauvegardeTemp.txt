@@ -1,9 +1,0 @@
-\hex
-\board 2
-o.
-..
-\endboard
-\game
-\play BLANC 0 0
-\endgame
-\endhex
